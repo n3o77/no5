@@ -42,7 +42,7 @@ var TemplateParser = prime({
 			if (!VarTypeController) throw new Error('varTypeController "' + varType + '" not available')
 
 			var varTypeController = new VarTypeController(objVar, this.item, this.templateController)
-			ps.push(varTypeController.parse().then(this.updateTemplate.bind(this, jsonVar)))
+			ps.push(varTypeController.render().then(this.updateTemplate.bind(this, jsonVar)))
 		}
 
 		return all(ps).then(function() {

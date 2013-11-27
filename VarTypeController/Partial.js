@@ -2,6 +2,9 @@
 
 var prime = require('prime');
 var item = require('../item')
+var object = {
+	'mixIn': require('prime/object/mixIn')
+}
 
 var Partial = prime({
 
@@ -11,8 +14,14 @@ var Partial = prime({
 		this.tplDesc = tplDesc
 	},
 
-	parse: function() {
-		return this.templateController.getTemplateParser().parse(item(this.varTypeTag.tpl, this.tplDesc))
+	render: function() {
+		var desc = this.tplDesc
+		var ViewController = this.templateController.getViewController(this.varTypeTag.vc || this.varTypeTag.viewController)
+		if (ViewController) {
+			var viewController = new ViewController(this.varTypeTag, desc, this.templateController)
+			object.mixIn(desc, viewController.parse())
+		}
+		return this.templateController.getTemplateParser().parse(item(this.varTypeTag.tpl, desc))
 	}
 
 });

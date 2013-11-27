@@ -10,7 +10,7 @@ var Partial = prime({
 		this.tplDesc = tplDesc
 	},
 
-	parse: function() {
+	render: function() {
 		return new Promise(function(resolve, reject) {
 			resolve(this.tplDesc.values[this.varTypeTag.name] || '')
 		}.bind(this))

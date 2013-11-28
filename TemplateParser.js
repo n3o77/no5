@@ -16,12 +16,14 @@ var TemplateParser = prime({
 
 	parse: function(item) {
 		if (!item.template) throw new Error('No Template Given')
-		this.item = item
-
 		var ps = new Promise(function(resolve, reject) {
+			if (!item.render) return resolve('')
+
 			this.resolve = resolve
 			this.reject = reject
 		}.bind(this))
+		this.item = item
+
 		this.templateLoader.loadTemplate(item.template).then(this.parseTemplate.bind(this), this.reject).then(null, this.reject)
 
 		return ps
@@ -31,7 +33,6 @@ var TemplateParser = prime({
 		this.tpl = tpl
 		var vars = this.getVars(tpl)
 		if (vars.length === 0) return this.resolve(tpl)
-
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
 			var jsonVar = vars[i]

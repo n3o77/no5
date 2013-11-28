@@ -3,7 +3,7 @@
 var prime = require('prime')
 var item = require('../item')
 
-var Test = prime({
+var UserList = prime({
 
 	constructor: function (varTypeTag, tplDesc, tplController) {
 		this.templateController = tplController
@@ -13,15 +13,19 @@ var Test = prime({
 
 	parse: function() {
 		return {
-			'test': 'ABC',
-			'test2': 'def'
+			'listItems': [
+				item('listItem', {'title': 'List Item 1'}),
+				item('listItem', {'title': 'List Item 2'}),
+				item('listItem', {'title': 'List Item 3'}),
+				item('listItem', {'title': 'List Item 4'})
+			]
 		}
 	},
 
 	renderPartial: function() {
-		return true
+		return (Date.now() % 2) === 1
 	}
 
 })
 
-module.exports = Test
+module.exports = UserList

@@ -2,6 +2,7 @@
 
 var prime = require('prime')
 var item = require('../item')
+var Promise = require('promise')
 
 var Test = prime({
 
@@ -12,14 +13,18 @@ var Test = prime({
 	},
 
 	parse: function() {
-		return {
-			'test': 'ABC',
-			'test2': 'def'
-		}
+		return new Promise(function(resolve, reject) {
+			resolve({
+				'test': 'ABC',
+				'test2': 'def'
+			})
+		}.bind(this));
 	},
 
 	renderPartial: function() {
-		return true
+		return new Promise(function(resolve, reject) {
+			resolve(true)
+		}.bind(this));
 	}
 
 })

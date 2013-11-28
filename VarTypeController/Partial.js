@@ -21,8 +21,12 @@ var Partial = prime({
 		var ViewController = this.templateController.getViewController(this.varTypeTag.vc || this.varTypeTag.viewController)
 		if (ViewController) {
 			var viewController = new ViewController(this.varTypeTag, desc, this.templateController)
-			render = viewController.renderPartial()
-			if (render) desc = object.mixIn(desc, viewController.parse())
+			return viewController.renderPartial().then(function(render) {
+				if (render) return viewController.parse();
+			}).then(function(vcDesc) {
+				desc = object.mixIn(desc, vcDesc)
+				return this.templateController.getTemplateParser().parse(item(this.varTypeTag.tpl, desc, 0, render))
+			}.bind(this))
 		}
 		return this.templateController.getTemplateParser().parse(item(this.varTypeTag.tpl, desc, 0, render))
 	}

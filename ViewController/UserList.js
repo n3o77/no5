@@ -2,6 +2,7 @@
 
 var prime = require('prime')
 var item = require('../item')
+var Promise = require('promise')
 
 var UserList = prime({
 
@@ -12,18 +13,22 @@ var UserList = prime({
 	},
 
 	parse: function() {
-		return {
-			'listItems': [
-				item('listItem', {'title': 'List Item 1'}),
-				item('listItem', {'title': 'List Item 2'}),
-				item('listItem', {'title': 'List Item 3'}),
-				item('listItem', {'title': 'List Item 4'})
-			]
-		}
+		return new Promise(function(resolve, reject) {
+			resolve({
+				'listItems': [
+					item('listItem', {'title': 'List Item 1'}),
+					item('listItem', {'title': 'List Item 2'}),
+					item('listItem', {'title': 'List Item 3'}),
+					item('listItem', {'title': 'List Item 4'})
+				]
+			})
+		}.bind(this));
 	},
 
 	renderPartial: function() {
-		return (Date.now() % 2) === 1
+		return new Promise(function(resolve, reject) {
+			resolve((Date.now() % 2) === 1)
+		}.bind(this));
 	}
 
 })

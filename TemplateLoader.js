@@ -4,11 +4,14 @@ var prime = require('prime')
 var path = require('path')
 var Promise = require('promise')
 var config = require('./config')
+var object = {
+	'mixIn': require('prime/object/mixIn')
+}
 
 var TemplateLoader = prime({
 
-	constructor: function () {
-
+	constructor: function (conf) {
+		this.config = object.mixIn(config, conf)
 	},
 
 	loadTemplate: function(filePath, cb) {

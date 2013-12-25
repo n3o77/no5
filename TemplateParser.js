@@ -36,7 +36,12 @@ var TemplateParser = prime({
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
 			var jsonVar = vars[i]
-			var objVar = JSON.parse(jsonVar)
+			try {
+				var objVar = JSON.parse(jsonVar.replace(/'/g, '"'))
+			} catch (e) {
+				console.log('ERROR WITH VARTYPE: ', jsonVar);
+			}
+
 			var varType = this.getVarType(objVar.type)
 
 			var VarTypeController = this.varTypeController[varType]
@@ -52,8 +57,12 @@ var TemplateParser = prime({
 	},
 
 	updateTemplate: function(jsonVar, result) {
-		var regex = new RegExp("\\$"+jsonVar, 'g')
+		var regex = new RegExp("\\$"+this.escapeVar(jsonVar), 'g')
 		this.tpl = this.tpl.replace(regex, result)
+	},
+
+	escapeVar: function(jvar) {
+	return jvar.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	},
 
 	getVarType: function(type) {

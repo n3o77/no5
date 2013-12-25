@@ -11,9 +11,7 @@ var Partial = prime({
 	},
 
 	render: function() {
-		return new Promise(function(resolve, reject) {
-			resolve(this.tplDesc.values[this.varTypeTag.name] || '')
-		}.bind(this))
+        return Promise.from(this.tplDesc.values[this.varTypeTag.name] || '');
 	}
 
 });

@@ -4,7 +4,7 @@ var prime = require('prime');
 var Promise = require('promise')
 var fromPath = require('../utils/fromPath');
 
-var Partial = prime({
+var Text = prime({
 
 	constructor: function (varTypeTag, tplDesc) {
 		this.varTypeTag = varTypeTag
@@ -17,4 +17,4 @@ var Partial = prime({
 
 });
 
-module.exports = Partial
+module.exports = Text

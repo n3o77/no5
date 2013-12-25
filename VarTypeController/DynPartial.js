@@ -11,6 +11,7 @@ var object = {
 var Partial = require('./Partial')
 var Promise = require('promise')
 var all = Promise.all
+var fromPath = require('../utils/fromPath')
 
 var DynPartial = prime({
 
@@ -23,7 +24,7 @@ var DynPartial = prime({
 	render: function() {
 		return new Promise(function(resolve, reject) {
 			var desc = this.tplDesc
-			var items = this.tplDesc.values[this.varTypeTag.name]
+			var items = fromPath(this.tplDesc.values, this.varTypeTag.name)
 			var ps = []
 			if (!items || items.length === 0) return resolve('')
 

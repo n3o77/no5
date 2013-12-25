@@ -2,6 +2,7 @@
 
 var prime = require('prime');
 var Promise = require('promise')
+var fromPath = require('../utils/fromPath');
 
 var Partial = prime({
 
@@ -11,7 +12,7 @@ var Partial = prime({
 	},
 
 	render: function() {
-        return Promise.from(this.tplDesc.values[this.varTypeTag.name] || '');
+        return Promise.from(fromPath(this.tplDesc.values, this.varTypeTag.name) || '');
 	}
 
 });

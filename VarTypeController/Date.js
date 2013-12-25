@@ -5,7 +5,7 @@ var Promise = require('promise');
 var moment = require('moment');
 var fromPath = require('../utils/fromPath');
 
-var Partial = prime({
+var Date = prime({
 
 	constructor: function (varTypeTag, tplDesc) {
 		this.varTypeTag = varTypeTag
@@ -21,4 +21,4 @@ var Partial = prime({
 
 });
 
-module.exports = Partial
+module.exports = Date

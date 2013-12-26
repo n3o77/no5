@@ -4,11 +4,11 @@
   "description": "ez template engine for node and server",
   "main": "index.js",
   "dependencies": {
-    "finally": "~0.0.4",
     "htmltidy": "~0.0.6",
-    "prime": "~0.3.1",
+    "prime": "~0.3.2",
     "promise": "~3.2.0",
-    "moment": "~2.5.0"
+    "moment": "~2.5.0",
+    "agent": "0.0.4"
   },
   "devDependencies": {},
   "scripts": {

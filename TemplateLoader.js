@@ -14,7 +14,7 @@ var TemplateLoader = prime({
 		this.config = object.mixIn(config, conf)
 	},
 
-	loadTemplate: function(filePath, cb) {
+	loadTemplate: function(filePath) {
 		return new Promise(function(resolve, reject) {
 			filePath = path.normalize(config.templates + '/' + filePath + '.' + config.tplSuffix)
 			fs.readFile(filePath, 'utf-8', function(err, data) {

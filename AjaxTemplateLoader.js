@@ -8,7 +8,7 @@ var agent = require('agent');
 
 var AjaxTemplateLoader = prime({
 
-    config: null,
+    config: {},
     cache: null,
 
 	constructor: function (conf) {

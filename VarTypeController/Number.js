@@ -19,7 +19,7 @@ var Number = prime({
 
     format: function(number, decimals, decPoint, thousandsSep) {
         //code from: https://github.com/taijinlee/humanize
-        decimals = isNaN(decimals) ? 2 : Math.abs(decimals);
+        decimals = isNaN(decimals) ? 0 : Math.abs(decimals);
         decPoint = (decPoint === undefined) ? ',' : decPoint;
         thousandsSep = (thousandsSep === undefined) ? '.' : thousandsSep;
 

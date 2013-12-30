@@ -5,7 +5,6 @@ var Promise = require('promise')
 var fromPath = require('../utils/fromPath')
 var typeOf = require('prime/type')
 var tplItem = require('../item')
-var Partial = require('./Partial')
 var array = {
     'forEach': require('prime/array/forEach'),
     'map': require('prime/array/map')

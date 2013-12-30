@@ -21,25 +21,25 @@ var DynPartial = prime({
 	},
 
 	render: function() {
-		return new Promise(function(resolve, reject) {
-			var desc = this.tplDesc
-			var items = fromPath(this.tplDesc.values, this.varTypeTag.name)
-			var ps = []
-			if (!items || items.length === 0) return resolve('')
+        return this.renderItems(fromPath(this.tplDesc.values, this.varTypeTag.name))
+	},
 
-			items.sort(function(a, b) {
-				return a.pos - b.pos
-			})
+    renderItems: function(items) {
+        var ps = []
+        if (!items || items.length === 0) return Promise.from('')
 
-			array.forEach(items, function(item) {
-				ps.push(this.templateController.getTemplateParser().parse(item))
-			}, this)
+        items.sort(function(a, b) {
+            return a.pos - b.pos
+        })
 
-			all(ps).then(function(templates) {
-				resolve(templates.join(''))
-			})
-		}.bind(this));
-	}
+        array.forEach(items, function(item) {
+            ps.push(this.templateController.getTemplateParser().parse(item))
+        }, this)
+
+        return all(ps).then(function(templates) {
+            return templates.join('')
+        })
+    }
 
 })
 

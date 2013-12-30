@@ -32,7 +32,7 @@ var Text = prime({
         }
 
         if (typeOf(options) === 'object') {
-            options = this.generateOptionsFromObject()
+            options = this.generateOptionsFromObject(options)
         }
 
         values.options = this.buildOptions(options)
@@ -41,7 +41,7 @@ var Text = prime({
 
     generateOptionsFromObject: function(options) {
         var opts = []
-        forOwn(options, function(value, key) {
+        object.forOwn(options, function(value, key) {
             opts.push({'value': key, 'label': value})
         })
 

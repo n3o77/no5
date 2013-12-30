@@ -8,7 +8,6 @@ var array = {
 var object = {
 	'mixIn': require('prime/object/mixIn')
 }
-var Partial = require('./Partial')
 var Promise = require('promise')
 var all = Promise.all
 var fromPath = require('../utils/fromPath')

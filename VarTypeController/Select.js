@@ -5,6 +5,7 @@ var Promise = require('promise')
 var fromPath = require('../utils/fromPath')
 var typeOf = require('prime/type')
 var tplItem = require('../item')
+var DynPartial = require('./DynPartial');
 var array = {
     'forEach': require('prime/array/forEach'),
     'map': require('prime/array/map')
@@ -35,7 +36,12 @@ var Text = prime({
         }
 
         values.options = this.buildOptions(options)
-        return this.templateController.getTemplateParser().parse(tplItem(tpl || 'input/select', object.mixIn({}, this.varTypeTag, values)))
+        if (!this.varTypeTag.onlyOptions) {
+            return this.templateController.getTemplateParser().parse(tplItem(tpl || 'input/select', object.mixIn({}, this.varTypeTag, values)))
+        }
+
+        var dp = new DynPartial(this.varTypeTag, this.tplDesc, this.templateController);
+        return dp.renderItems(values.options);
     },
 
     generateOptionsFromObject: function(options) {

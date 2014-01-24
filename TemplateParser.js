@@ -15,11 +15,14 @@ var TemplateParser = prime({
 	},
 
 	parse: function(tpl) {
-		return new Promise(function(resolve, reject) {
+		var p = new Promise(function(resolve, reject) {
 			this.resolve = resolve
 			this.reject = reject
-            this.parseTemplate(tpl)
 		}.bind(this))
+
+        this.parseTemplate(tpl)
+
+        return p
 	},
 
 	parseTemplate: function(tpl) {
@@ -37,10 +40,10 @@ var TemplateParser = prime({
 
 			var varType = this.getVarType(objVar.type)
 
-			var VarTypeController = this.varTypeController[varType]
-			if (!VarTypeController) throw new Error('varTypeController "' + varType + '" not available')
+			var VarTypeControllerObj = this.varTypeController[varType]
+			if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available')
 
-			var varTypeController = new VarTypeController(objVar, this.item, this.templateController)
+			var varTypeController = new VarTypeControllerObj.controller(objVar, this.item, this.templateController, VarTypeControllerObj.options)
 			ps.push(varTypeController.render().then(this.updateTemplate.bind(this, jsonVar)))
 		}
 
@@ -55,7 +58,7 @@ var TemplateParser = prime({
 	},
 
 	escapeVar: function(jvar) {
-	return jvar.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+	    return jvar.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	},
 
 	getVarType: function(type) {

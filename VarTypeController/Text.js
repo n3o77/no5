@@ -2,7 +2,9 @@
 
 var prime = require('prime');
 var Promise = require('promise')
-var fromPath = require('../utils/fromPath');
+var object = {
+    'get': require('mout/object/get')
+};
 
 var Text = prime({
 
@@ -12,7 +14,7 @@ var Text = prime({
 	},
 
 	render: function() {
-        return Promise.from(fromPath(this.item.values, this.varTypeTag.name) || '');
+        return Promise.from(object.get(this.item.values, this.varTypeTag.key) || '');
 	}
 
 });

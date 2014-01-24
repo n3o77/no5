@@ -6,11 +6,12 @@ var array = {
 	'forEach': require('prime/array/forEach')
 }
 var object = {
-	'mixIn': require('prime/object/mixIn')
+	'mixIn': require('prime/object/mixIn'),
+    'get': require('mout/object/get')
 }
+
 var Promise = require('promise')
 var all = Promise.all
-var fromPath = require('../utils/fromPath')
 
 var DynPartial = prime({
 
@@ -21,7 +22,7 @@ var DynPartial = prime({
 	},
 
 	render: function() {
-        return this.renderItems(fromPath(this.item.values, this.varTypeTag.name))
+        return this.renderItems(object.get(this.item.values, this.varTypeTag.key))
 	},
 
     renderItems: function(items) {

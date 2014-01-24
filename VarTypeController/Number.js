@@ -2,26 +2,36 @@
 
 var prime = require('prime');
 var Promise = require('promise');
-var fromPath = require('../utils/fromPath');
+var object = {
+    'get': require('mout/object/get'),
+    'merge': require('mout/object/merge')
+}
 
 var Number = prime({
 
-    constructor: function (varTypeTag, tplDesc) {
+    options: {
+        'decimals': 0,
+        'decPoint': '.',
+        'thousandsSep': ','
+    },
+
+    constructor: function (varTypeTag, tplDesc, templateController, options) {
+        this.options = object.merge(this.options, options)
         this.varTypeTag = varTypeTag
         this.item = tplDesc
     },
 
     render: function() {
-        var value = fromPath(this.item.values, this.varTypeTag.name);
+        var value = object.get(this.item.values, this.varTypeTag.key);
 
         return Promise.from(this.format(value, this.varTypeTag.decimals, this.varTypeTag.decPoint, this.varTypeTag.thousandsSep));
     },
 
     format: function(number, decimals, decPoint, thousandsSep) {
         //code from: https://github.com/taijinlee/humanize
-        decimals = isNaN(decimals) ? 0 : Math.abs(decimals);
-        decPoint = (decPoint === undefined) ? ',' : decPoint;
-        thousandsSep = (thousandsSep === undefined) ? '.' : thousandsSep;
+        decimals = isNaN(decimals) ? this.options.decimals : Math.abs(decimals);
+        decPoint = (decPoint === undefined) ? this.options.decPoint : decPoint;
+        thousandsSep = (thousandsSep === undefined) ? this.options.thousandsSep : thousandsSep;
 
         var sign = number < 0 ? '-' : '';
         number = Math.abs(+number || 0);

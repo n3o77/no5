@@ -2,7 +2,6 @@
 
 var prime = require('prime')
 var Promise = require('promise')
-var fromPath = require('../utils/fromPath')
 var typeOf = require('prime/type')
 var tplItem = require('../item')
 var DynPartial = require('./DynPartial');
@@ -12,9 +11,9 @@ var array = {
 }
 var object = {
     'forOwn': require('prime/object/forOwn'),
-    'mixIn': require('prime/object/mixIn')
+    'mixIn': require('prime/object/mixIn'),
+    'get': require('mout/object/get')
 }
-
 
 var Text = prime({
 
@@ -25,8 +24,8 @@ var Text = prime({
     },
 
     render: function() {
-        var options = fromPath(this.item.values, this.varTypeTag.name)
-        var tpl = fromPath(this.item.values, this.varTypeTag.tpl)
+        var options = object.get(this.item.values, this.varTypeTag.key)
+        var tpl = object.get(this.item.values, this.varTypeTag.tpl)
         var values = {
             'options': []
         }
@@ -55,7 +54,7 @@ var Text = prime({
 
     buildOptions: function(options) {
         if (!options) return []
-        var value = fromPath(this.item.values, this.varTypeTag.value)
+        var value = object.get(this.item.values, this.varTypeTag.value)
         return array.map(options, function(option, index) {
             if (option.value === value) option.selected = 'selected'
             return tplItem('input/option', option, index)

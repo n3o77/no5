@@ -7,13 +7,14 @@ var fromPath = require('../utils/fromPath');
 
 var Date = prime({
 
-	constructor: function (varTypeTag, tplDesc) {
+	constructor: function (varTypeTag, tplDesc, templateController) {
 		this.varTypeTag = varTypeTag
-		this.tplDesc = tplDesc
+		this.item = tplDesc
+        this.templateController = templateController
 	},
 
 	render: function() {
-        var date = moment(fromPath(this.tplDesc.values, this.varTypeTag.name));
+        var date = moment(fromPath(this.item.values, this.varTypeTag.name));
         var format = this.varTypeTag.format || 'YYYY-MM-DD';
 
         return Promise.from(date.format(format));

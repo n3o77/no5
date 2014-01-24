@@ -8,11 +8,11 @@ var Number = prime({
 
     constructor: function (varTypeTag, tplDesc) {
         this.varTypeTag = varTypeTag
-        this.tplDesc = tplDesc
+        this.item = tplDesc
     },
 
     render: function() {
-        var value = fromPath(this.tplDesc.values, this.varTypeTag.name);
+        var value = fromPath(this.item.values, this.varTypeTag.name);
 
         return Promise.from(this.format(value, this.varTypeTag.decimals, this.varTypeTag.decPoint, this.varTypeTag.thousandsSep));
     },

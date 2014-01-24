@@ -8,25 +8,18 @@ var TemplateParser = prime({
 
 	varTypeController: null,
 
-	constructor: function (templateLoader, varTypeController, templateController) {
-		this.templateLoader = templateLoader
+	constructor: function (varTypeController, templateController, item) {
 		this.varTypeController = varTypeController
 		this.templateController = templateController
+        this.item = item
 	},
 
-	parse: function(item) {
-		if (!item.template) throw new Error('No Template Given')
-		var ps = new Promise(function(resolve, reject) {
-			if (!item.render) return resolve('')
-
+	parse: function(tpl) {
+		return new Promise(function(resolve, reject) {
 			this.resolve = resolve
 			this.reject = reject
+            this.parseTemplate(tpl)
 		}.bind(this))
-		this.item = item
-
-		this.templateLoader.loadTemplate(item.template).then(this.parseTemplate.bind(this), this.reject).then(null, this.reject)
-
-		return ps
 	},
 
 	parseTemplate: function(tpl) {

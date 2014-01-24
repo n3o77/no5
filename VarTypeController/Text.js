@@ -8,11 +8,11 @@ var Text = prime({
 
 	constructor: function (varTypeTag, tplDesc) {
 		this.varTypeTag = varTypeTag
-		this.tplDesc = tplDesc
+		this.item = tplDesc
 	},
 
 	render: function() {
-        return Promise.from(fromPath(this.tplDesc.values, this.varTypeTag.name) || '');
+        return Promise.from(fromPath(this.item.values, this.varTypeTag.name) || '');
 	}
 
 });

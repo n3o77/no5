@@ -9,15 +9,16 @@ var object = {
 
 var Partial = prime({
 
-	constructor: function (varTypeTag, tplDesc, tplController) {
+	constructor: function (varTypeTag, item, tplController) {
 		this.templateController = tplController
 		this.varTypeTag = varTypeTag
-		this.tplDesc = tplDesc
+		this.item = item
 	},
 
 	render: function() {
-		var desc = object.create(this.tplDesc)
+		var desc = object.create(this.item)
 		var render = true;
+
 		var ViewController = this.templateController.getViewController(this.varTypeTag.vc || this.varTypeTag.viewController)
 		if (ViewController) {
 			var viewController = new ViewController(this.varTypeTag, desc, this.templateController)
@@ -28,6 +29,7 @@ var Partial = prime({
 				return this.templateController.getTemplateParser().parse(item(this.varTypeTag.tpl, desc, 0, render))
 			}.bind(this))
 		}
+
 		return this.templateController.getTemplateParser().parse(item(this.varTypeTag.tpl, desc, 0, render))
 	}
 

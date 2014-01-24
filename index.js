@@ -1,7 +1,7 @@
 'use strict';
 
 var TemplateController = require('./TemplateController')
-var TempladteLoader = require('./TemplateLoader')
+var TemplateLoader = require('./TemplateLoader')
 var item = require('./item')
 
 var VTPartial = require('./VarTypeController/Partial')
@@ -13,12 +13,17 @@ var VCUserList = require('./ViewController/UserList')
 
 var tidy = require('htmltidy').tidy
 
-var templateLoader = new TempladteLoader()
+var templateLoader = new TemplateLoader()
 var templateController = new TemplateController(templateLoader)
+
+var number =  new require('./ViewController/Test')({'...': '...'});
+var currency = new NumberVarTypeBlah({'...': '...'});
 
 templateController.registerVarTypeController('Partial', VTPartial)
 templateController.registerVarTypeController('Text', VTText)
 templateController.registerVarTypeController('DynPartial', VTDynPartial)
+templateController.registerVarTypeController('Number', number);
+templateController.registerVarTypeController('Currency', currency);
 
 templateController.registerViewController('Test', VCTest)
 templateController.registerViewController('UserList', VCUserList)

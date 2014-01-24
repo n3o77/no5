@@ -21,12 +21,12 @@ var Text = prime({
     constructor: function (varTypeTag, tplDesc, tplController) {
         this.templateController = tplController
         this.varTypeTag = varTypeTag
-        this.tplDesc = tplDesc
+        this.item = tplDesc
     },
 
     render: function() {
-        var options = fromPath(this.tplDesc.values, this.varTypeTag.name)
-        var tpl = fromPath(this.tplDesc.values, this.varTypeTag.tpl)
+        var options = fromPath(this.item.values, this.varTypeTag.name)
+        var tpl = fromPath(this.item.values, this.varTypeTag.tpl)
         var values = {
             'options': []
         }
@@ -40,7 +40,7 @@ var Text = prime({
             return this.templateController.getTemplateParser().parse(tplItem(tpl || 'input/select', object.mixIn({}, this.varTypeTag, values)))
         }
 
-        var dp = new DynPartial(this.varTypeTag, this.tplDesc, this.templateController);
+        var dp = new DynPartial(this.varTypeTag, this.item, this.templateController);
         return dp.renderItems(values.options);
     },
 
@@ -55,7 +55,7 @@ var Text = prime({
 
     buildOptions: function(options) {
         if (!options) return []
-        var value = fromPath(this.tplDesc.values, this.varTypeTag.value)
+        var value = fromPath(this.item.values, this.varTypeTag.value)
         return array.map(options, function(option, index) {
             if (option.value === value) option.selected = 'selected'
             return tplItem('input/option', option, index)

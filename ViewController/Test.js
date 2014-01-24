@@ -9,7 +9,7 @@ var Test = prime({
 	constructor: function (varTypeTag, tplDesc, tplController) {
 		this.templateController = tplController
 		this.varTypeTag = varTypeTag
-		this.tplDesc = tplDesc
+		this.item = tplDesc
 	},
 
 	parse: function() {

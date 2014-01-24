@@ -29,14 +29,15 @@ var TemplateController = prime({
 	},
 
 	parse: function(item) {
-		return this.getTemplateParser().parse(item)
+        if (!item.template) throw new Error('No Template Given')
+        if (!item.render) return resolve('')
+
+        return this.templateLoader.loadTemplate(item.template).then(this.getTemplateParser(item).parse.bind(this))
 	},
 
-	getTemplateParser: function() {
-		return new TemplateParser(this.templateLoader, this.varTypeController, this)
+	getTemplateParser: function(item) {
+		return new TemplateParser(this.varTypeController, this, item)
 	}
-
-
 
 });
 

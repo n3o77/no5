@@ -9,7 +9,7 @@ var UserList = prime({
 	constructor: function (varTypeTag, tplDesc, tplController) {
 		this.templateController = tplController
 		this.varTypeTag = varTypeTag
-		this.tplDesc = tplDesc
+		this.item = tplDesc
 	},
 
 	parse: function() {
@@ -26,9 +26,7 @@ var UserList = prime({
 	},
 
 	renderPartial: function() {
-		return new Promise(function(resolve, reject) {
-			resolve((Date.now() % 2) === 1)
-		}.bind(this));
+		return Promise.from((Date.now() % 2) === 1);
 	}
 
 })

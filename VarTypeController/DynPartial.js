@@ -17,11 +17,11 @@ var DynPartial = prime({
 	constructor: function (varTypeTag, tplDesc, tplController) {
 		this.templateController = tplController
 		this.varTypeTag = varTypeTag
-		this.tplDesc = tplDesc
+		this.item = tplDesc
 	},
 
 	render: function() {
-        return this.renderItems(fromPath(this.tplDesc.values, this.varTypeTag.name))
+        return this.renderItems(fromPath(this.item.values, this.varTypeTag.name))
 	},
 
     renderItems: function(items) {

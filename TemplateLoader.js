@@ -16,13 +16,13 @@ var TemplateLoader = prime({
 	},
 
 	constructor: function (conf) {
-		this.internalPath = __dirname + '/templates'
 		this.config = object.mixIn(config, conf)
 	},
 
 	loadTemplate: function(filePath) {
 		return new Promise(function(resolve, reject) {
-			var fallBack = path.normalize(this.internalPath + '/' + filePath + '.' + config.tplSuffix)
+            var internalPath = __dirname + '/templates'
+			var fallBack = path.normalize(internalPath + '/' + filePath + '.' + config.tplSuffix)
 			filePath = path.normalize(config.templates + '/' + filePath + '.' + config.tplSuffix)
 			if (!fs.existsSync(filePath) && fs.existsSync(fallBack)) filePath = fallBack
 

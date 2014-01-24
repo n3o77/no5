@@ -7,6 +7,10 @@ var object = {
     'merge': require('mout/object/merge')
 }
 
+var number = {
+    'currencyFormat': require('mout/number/currencyFormat')
+}
+
 var Number = prime({
 
     options: {
@@ -24,22 +28,14 @@ var Number = prime({
     render: function() {
         var value = object.get(this.item.values, this.varTypeTag.key);
 
-        return Promise.from(this.format(value, this.varTypeTag.decimals, this.varTypeTag.decPoint, this.varTypeTag.thousandsSep));
-    },
-
-    format: function(number, decimals, decPoint, thousandsSep) {
-        //code from: https://github.com/taijinlee/humanize
-        decimals = isNaN(decimals) ? this.options.decimals : Math.abs(decimals);
-        decPoint = (decPoint === undefined) ? this.options.decPoint : decPoint;
-        thousandsSep = (thousandsSep === undefined) ? this.options.thousandsSep : thousandsSep;
-
-        var sign = number < 0 ? '-' : '';
-        number = Math.abs(+number || 0);
-
-        var intPart = parseInt(number.toFixed(decimals), 10) + '';
-        var j = intPart.length > 3 ? intPart.length % 3 : 0;
-
-        return sign + (j ? intPart.substr(0, j) + thousandsSep : '') + intPart.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousandsSep) + (decimals ? decPoint + Math.abs(number - intPart).toFixed(decimals).slice(2) : '');
+        return Promise.from(
+            number.currencyFormat(
+                value,
+                this.varTypeTag.decimals || this.options.decimals,
+                this.varTypeTag.decPoint || this.options.decPoint,
+                this.varTypeTag.thousandsSep || this.options.thousandsSep
+            )
+        );
     }
 
 });

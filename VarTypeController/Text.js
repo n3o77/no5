@@ -2,6 +2,9 @@
 
 var prime = require('prime');
 var Promise = require('promise')
+var lang = {
+    'isString': require('mout/lang/isString')
+}
 var object = {
     'get': require('mout/object/get')
 };
@@ -14,7 +17,10 @@ var Text = prime({
 	},
 
 	render: function() {
-        return Promise.from(object.get(this.item.values, this.varTypeTag.key) || '');
+        var value = object.get(this.item.values, this.varTypeTag.key)
+        if (!lang.isString(value)) value = JSON.stringify(value)
+
+        return Promise.from(value || '');
 	}
 
 });

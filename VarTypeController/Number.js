@@ -18,7 +18,7 @@ var Number = prime({
         'decimals': 0,
         'decPoint': '.',
         'thousandsSep': ',',
-        'pad': 0,
+        'pad': null,
         'padChar': null,
         'prefix': '',
         'suffix': ''

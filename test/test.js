@@ -44,6 +44,10 @@ describe('Template System', function() {
         it('should use testNumber type with custom options', function() {
             return expect(template.render(template.item('vt_number3', {'test': 1234.55}))).to.eventually.be.eql('<div>1.234,550</div>')
         })
+
+        it('should display number with pad options', function() {
+            return expect(template.render(template.item('vt_number4', {'test': 12.55}))).to.eventually.be.eql('<div>__12.55</div>')
+        })
     })
 
     describe('Basics', function() {

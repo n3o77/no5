@@ -104,10 +104,6 @@ describe('Template System', function() {
         })
     })
 
-    describe('View Controller', function() {
-        xit('should manipulate all item vars')
-    })
-
     describe('Auto Casting for VarTypes', function() {
         it('should autocast boolean to boolean', function() {
             return expect(template.render(template.item('vt_autocast', {'test': true}))).to.eventually.be.eql('<div>yes</div>')
@@ -129,6 +125,12 @@ describe('Template System', function() {
         xit('should autocast array with items to dynPartial');
         xit('should autocast array with objects with item value to dynPartial (key = template, value = values)');
         xit('should autocast array with no items to text');
+    })
+
+    describe('View Controller', function() {
+        it('should manipulate all item vars', function() {
+            return expect(template.render(template.item('vt_viewController', {'test': "abc"}))).to.eventually.be.eql('<div>1970-01-02</div>')
+        })
     })
 
 });

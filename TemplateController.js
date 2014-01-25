@@ -44,7 +44,7 @@ var TemplateController = prime({
 	},
 
 	getViewController: function(name) {
-		if (this.viewController[name]) return this.viewController[name].controller
+		if (this.viewController[name]) return this.viewController[name]
 		return null
 	},
 

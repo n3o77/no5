@@ -41,19 +41,29 @@ var TemplateParser = prime({
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
 			var jsonVar = vars[i]
+            var objVar
 			try {
-				var objVar = JSON.parse(jsonVar.replace(/'/g, '"'))
+				objVar = JSON.parse(jsonVar.replace(/'/g, '"'))
 			} catch (e) {
 				console.log('ERROR WITH VARTYPE: ', jsonVar);
 			}
 
-			var varType = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
+            var initVarType = function() {
+                var varType = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
+                var VarTypeControllerObj = this.varTypeController[varType]
+                if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available')
 
-			var VarTypeControllerObj = this.varTypeController[varType]
-			if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available')
+                var varTypeController = new VarTypeControllerObj.controller(objVar, this.item, this.templateController, VarTypeControllerObj.options)
+                return varTypeController.render().then(this.updateTemplate.bind(this, jsonVar))
+            }.bind(this)
 
-			var varTypeController = new VarTypeControllerObj.controller(objVar, this.item, this.templateController, VarTypeControllerObj.options)
-			ps.push(varTypeController.render().then(this.updateTemplate.bind(this, jsonVar)))
+            var ViewControllerObj = this.templateController.getViewController(objVar.vc || objVar.viewController)
+            if (ViewControllerObj) {
+                var viewController = new ViewControllerObj.controller(objVar, this.item, this.templateController, ViewControllerObj.options)
+                ps.push(viewController.parse().then(initVarType))
+            } else {
+                ps.push(initVarType())
+            }
 		}
 
 		return all(ps).then(function() {

@@ -16,6 +16,8 @@ templateDescriptor.registerVarTypeController('Select', require('../VarTypeContro
 templateDescriptor.registerVarTypeController('Boolean', require('../VarTypeController/Boolean'), {'true': 'yes', 'false': 'no'})
 templateDescriptor.registerVarTypeController('Bool', require('../VarTypeController/Boolean'))
 
+templateDescriptor.registerViewController('Test', require('./viewController/Test'))
+
 module.exports = {
     'item': require('../item'),
     'render': function(item, session) {

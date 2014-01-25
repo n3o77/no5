@@ -2,8 +2,10 @@
 
 var prime = require('prime');
 var item = require('../item')
+var isItem = require('../util/isItem')
 var object = {
 	'merge': require('mout/object/merge'),
+    'get': require('mout/object/get')
 }
 
 var lang = {
@@ -20,9 +22,11 @@ var Partial = prime({
 
 	render: function() {
 		var desc = lang.deepClone(this.item)
-		var render = true;
+        var value = object.get(this.item.values, this.varTypeTag.key)
 
-		return this.templateController.parse(item(this.varTypeTag.tpl, desc, 0, render))
+        if (isItem(value)) return this.templateController.parse(value)
+
+		return this.templateController.parse(item(this.varTypeTag.tpl, desc, 0, true))
 	}
 
 });

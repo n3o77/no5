@@ -68,6 +68,22 @@ describe('Template System', function() {
 
             return expect(template.render(template.item('vt_dynpartial1', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
         })
+
+        it('should order the items', function() {
+            var items = []
+            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}, 2))
+            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}, 1))
+
+            return expect(template.render(template.item('vt_dynpartial1', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
+        })
+
+        it('should not render items', function() {
+            var items = []
+            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}, 2, false))
+            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}, 1))
+
+            return expect(template.render(template.item('vt_dynpartial1', {'test': items}))).to.eventually.be.eql('<div>cp2d</div>')
+        })
     })
 
     describe('VarType Boolean', function() {

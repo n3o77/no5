@@ -61,8 +61,12 @@ describe('Template System', function() {
     })
 
     describe('VarType DynPartial', function() {
-        xit('should replace date tag', function() {
-            return expect(template.render(template.item('vt_dynpartial1', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>1970-01-02</div>')
+        it('should replace dynPartial tag', function() {
+            var items = []
+            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}))
+            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}))
+
+            return expect(template.render(template.item('vt_dynpartial1', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
         })
     })
 

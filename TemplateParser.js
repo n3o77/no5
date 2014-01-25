@@ -4,6 +4,10 @@ var prime = require('prime');
 var Promise = require('promise')
 var all = Promise.all
 
+var lang = {
+    'isString': require('mout/lang/isString')
+}
+
 var TemplateParser = prime({
 
 	varTypeController: null,
@@ -15,6 +19,7 @@ var TemplateParser = prime({
 	},
 
 	parse: function(tpl) {
+        if (!lang.isString(tpl)) throw error('Given Template is not a String: ' + tpl)
 		var p = new Promise(function(resolve, reject) {
 			this.resolve = resolve
 			this.reject = reject

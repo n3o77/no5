@@ -45,13 +45,15 @@ var Partial = prime({
         if (!lang.isArray(items)) throw new Error('Only type item or array is supported. You gave: ' + lang.kindOf(items) + ' ' + items)
 
         items.sort(function(a, b) {
-            if (!a.pos) return -1;
-            if (!b.pos) return -1;
+            if (!a.pos && !b.pos) return 0
+            if (!a.pos) return 1
+            if (!b.pos) return -1
             return a.pos - b.pos
         })
 
         array.forEach(items, function(item, idx) {
             if (lang.isObject(item) && !isItem(item)) item = this.castObjectToItem(item, idx)
+            if (lang.isString(item)) item = bItem(item, lang.deepClone(this.item), idx, true)
             ps.push(this.templateController.parse(item))
         }, this)
 

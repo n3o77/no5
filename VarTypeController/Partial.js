@@ -22,17 +22,6 @@ var Partial = prime({
 		var desc = lang.deepClone(this.item)
 		var render = true;
 
-		var ViewController = this.templateController.getViewController(this.varTypeTag.vc || this.varTypeTag.viewController)
-		if (ViewController) {
-			var viewController = new ViewController(this.varTypeTag, desc, this.templateController)
-			return viewController.renderPartial().then(function(render) {
-				if (render) return viewController.parse();
-			}).then(function(vcDesc) {
-				desc = object.merge(desc, vcDesc)
-				return this.templateController.parse(item(this.varTypeTag.tpl, desc, 0, render))
-			}.bind(this))
-		}
-
 		return this.templateController.parse(item(this.varTypeTag.tpl, desc, 0, render))
 	}
 

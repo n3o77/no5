@@ -87,20 +87,20 @@ describe('Template System', function() {
     })
 
     describe('VarType Boolean', function() {
-        it('should replace boolean tag with true', function() {
-            return expect(template.render(template.item('vt_boolean1', {'test': true}))).to.eventually.be.eql('<div>true</div>')
-        })
-
-        it('should replace boolean tag with false', function() {
-            return expect(template.render(template.item('vt_boolean1', {'test': false}))).to.eventually.be.eql('<div>false</div>')
-        })
-
         it('should replace boolean tag with custom true', function() {
-            return expect(template.render(template.item('vt_boolean2', {'test': true}))).to.eventually.be.eql('<div>yes</div>')
+            return expect(template.render(template.item('vt_boolean1', {'test': true}))).to.eventually.be.eql('<div>yes</div>')
         })
 
         it('should replace boolean tag with custom false', function() {
-            return expect(template.render(template.item('vt_boolean2', {'test': false}))).to.eventually.be.eql('<div>no</div>')
+            return expect(template.render(template.item('vt_boolean1', {'test': false}))).to.eventually.be.eql('<div>no</div>')
+        })
+
+        it('should replace boolean tag with true', function() {
+            return expect(template.render(template.item('vt_boolean2', {'test': true}))).to.eventually.be.eql('<div>true</div>')
+        })
+
+        it('should replace boolean tag with false', function() {
+            return expect(template.render(template.item('vt_boolean2', {'test': false}))).to.eventually.be.eql('<div>false</div>')
         })
     })
 
@@ -109,10 +109,22 @@ describe('Template System', function() {
     })
 
     describe('Auto Casting for VarTypes', function() {
-        xit('should autocast boolean to boolean');
-        xit('should autocast date to date');
-        xit('should autocast number to number');
-        xit('should autocast string to text');
+        it('should autocast boolean to boolean', function() {
+            return expect(template.render(template.item('vt_autocast', {'test': true}))).to.eventually.be.eql('<div>yes</div>')
+        });
+
+        it('should autocast date to date', function() {
+            return expect(template.render(template.item('vt_autocast', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>1970-01-02</div>')
+        });
+
+        it('should autocast number to number', function() {
+            return expect(template.render(template.item('vt_autocast', {'test': 12345678.9}))).to.eventually.be.eql('<div>12,345,679</div>')
+        });
+
+        it('should autocast string to text', function() {
+            return expect(template.render(template.item('vt_autocast', {'test': '000123.9ABC'}))).to.eventually.be.eql('<div>000123.9ABC</div>')
+        });
+
         xit('should autocast item to partial');
         xit('should autocast array with items to dynPartial');
         xit('should autocast array with objects with item value to dynPartial (key = template, value = values)');

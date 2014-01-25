@@ -13,8 +13,8 @@ templateDescriptor.registerVarTypeController('TestDate', require('../VarTypeCont
 templateDescriptor.registerVarTypeController('Number', require('../VarTypeController/Number'))
 templateDescriptor.registerVarTypeController('TestNumber', require('../VarTypeController/Number'), {'decimals': 3, 'decPoint': ',', 'thousandsSep': '.'})
 templateDescriptor.registerVarTypeController('Select', require('../VarTypeController/form/Select'))
-templateDescriptor.registerVarTypeController('Boolean', require('../VarTypeController/Boolean'))
-templateDescriptor.registerVarTypeController('Bool', require('../VarTypeController/Boolean'), {'true': 'yes', 'false': 'no'})
+templateDescriptor.registerVarTypeController('Boolean', require('../VarTypeController/Boolean'), {'true': 'yes', 'false': 'no'})
+templateDescriptor.registerVarTypeController('Bool', require('../VarTypeController/Boolean'))
 
 module.exports = {
     'item': require('../item'),

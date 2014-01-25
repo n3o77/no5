@@ -4,8 +4,12 @@ var prime = require('prime');
 var Promise = require('promise')
 var all = Promise.all
 
+var object = {
+    'get': require('mout/object/get')
+}
 var lang = {
-    'isString': require('mout/lang/isString')
+    'isString': require('mout/lang/isString'),
+    'kindOf': require('mout/lang/kindOf')
 }
 
 var TemplateParser = prime({
@@ -19,7 +23,6 @@ var TemplateParser = prime({
 	},
 
 	parse: function(tpl) {
-        if (!lang.isString(tpl)) throw error('Given Template is not a String: ' + tpl)
 		var p = new Promise(function(resolve, reject) {
 			this.resolve = resolve
 			this.reject = reject
@@ -31,6 +34,7 @@ var TemplateParser = prime({
 	},
 
 	parseTemplate: function(tpl) {
+        if (!lang.isString(tpl)) throw error('Given Template is not a String: ' + tpl)
 		this.tpl = tpl
 		var vars = this.getVars(tpl)
 		if (vars.length === 0) return this.resolve(tpl)
@@ -43,7 +47,7 @@ var TemplateParser = prime({
 				console.log('ERROR WITH VARTYPE: ', jsonVar);
 			}
 
-			var varType = this.getVarType(objVar.type)
+			var varType = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
 
 			var VarTypeControllerObj = this.varTypeController[varType]
 			if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available')
@@ -66,9 +70,22 @@ var TemplateParser = prime({
 	    return jvar.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	},
 
-	getVarType: function(type) {
-		if (!type) return 'Text'
-		return this.capitaliseFirstLetter(type)
+	getVarType: function(type, value) {
+		if (type) return this.capitaliseFirstLetter(type)
+        switch (lang.kindOf(value)) {
+            case "String":
+                return "Text"
+            case "Date":
+                return "Date"
+            case "Number":
+                return "Number"
+            case "Boolean":
+                return "Boolean"
+            case "Array":
+                return "Array"
+            default:
+                return "Text"
+        }
 	},
 
 	capitaliseFirstLetter: function(string) {

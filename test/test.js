@@ -86,12 +86,23 @@ describe('Template System', function() {
             return expect(template.render(template.item('vt_partial3', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
         })
 
-        it('should not render items', function() {
+        it('should not render items with render = false', function() {
             var items = []
             items.push(template.item('vt_partial3_p1', {'test': 'p1'}, 2, false))
             items.push(template.item('vt_partial3_p2', {'test': 'p2'}, 1))
 
             return expect(template.render(template.item('vt_partial3', {'test': items}))).to.eventually.be.eql('<div>cp2d</div>')
+        })
+
+        it('should support multiple formats as items and sort them correctly', function() {
+            var items = []
+            items.push(template.item('vt_partial3_p1', {'test': ' ps3 '}, 3))
+            items.push({'vt_partial3_p2': {'test': ' op2 '}})
+            items.push('vt_partial3_p3')
+            items.push(template.item('vt_partial3_p1', {'test': ' ps1 '}, 1))
+            items.push(template.item('vt_partial3_p1', {'test': ' ps2 '}, 2))
+
+            return expect(template.render(template.item('vt_partial2', {'test': items}))).to.eventually.be.eql('<div>a ps1 ba ps2 ba ps3 bc op2 def</div>')
         })
     })
 

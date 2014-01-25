@@ -59,34 +59,39 @@ describe('Template System', function() {
     })
 
     describe('VarType Partial', function() {
-        it('should replace partial tag', function() {
+        it('should replace partial tag with given template', function() {
             return expect(template.render(template.item('vt_partial1'))).to.eventually.be.eql('<div>ab</div>')
         })
-    })
 
-    describe('VarType DynPartial', function() {
+        it('should accept item', function() {
+            var innerItem = template.item('vt_partial3_p1', {'test': 'p1'});
+            var item = template.item('vt_partial2', {'test': innerItem});
+
+            return expect(template.render(item)).to.eventually.be.eql('<div>ap1b</div>')
+        })
+
         it('should replace dynPartial tag', function() {
             var items = []
-            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}))
-            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}))
+            items.push(template.item('vt_partial3_p1', {'test': 'p1'}))
+            items.push(template.item('vt_partial3_p2', {'test': 'p2'}))
 
-            return expect(template.render(template.item('vt_dynpartial1', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
+            return expect(template.render(template.item('vt_partial3', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
         })
 
         it('should order the items', function() {
             var items = []
-            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}, 2))
-            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}, 1))
+            items.push(template.item('vt_partial3_p1', {'test': 'p1'}, 2))
+            items.push(template.item('vt_partial3_p2', {'test': 'p2'}, 1))
 
-            return expect(template.render(template.item('vt_dynpartial1', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
+            return expect(template.render(template.item('vt_partial3', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
         })
 
         it('should not render items', function() {
             var items = []
-            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}, 2, false))
-            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}, 1))
+            items.push(template.item('vt_partial3_p1', {'test': 'p1'}, 2, false))
+            items.push(template.item('vt_partial3_p2', {'test': 'p2'}, 1))
 
-            return expect(template.render(template.item('vt_dynpartial1', {'test': items}))).to.eventually.be.eql('<div>cp2d</div>')
+            return expect(template.render(template.item('vt_partial3', {'test': items}))).to.eventually.be.eql('<div>cp2d</div>')
         })
     })
 
@@ -126,20 +131,20 @@ describe('Template System', function() {
         });
 
         it('should autocast item to partial', function() {
-            var item = template.item('vt_dynpartial1_p1', {'test': 'p1'});
+            var item = template.item('vt_partial3_p1', {'test': 'p1'});
             return expect(template.render(template.item('vt_autocast', {'test': item}))).to.eventually.be.eql('<div>ap1b</div>')
         });
 
         it('should autocast array with items to dynPartial', function() {
             var items = []
-            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}, 2))
-            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}, 1))
+            items.push(template.item('vt_partial3_p1', {'test': 'p1'}, 2))
+            items.push(template.item('vt_partial3_p2', {'test': 'p2'}, 1))
 
             return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
         });
 
         it('should autocast array with objects with item value to dynPartial (key = template, value = values)', function() {
-            var items = [{'vt_dynpartial1_p1': {'test': 'p1'}},{'vt_dynpartial1_p2': {'test': 'p2'}}]
+            var items = [{'vt_partial3_p1': {'test': 'p1'}},{'vt_partial3_p2': {'test': 'p2'}}]
             return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
         });
 

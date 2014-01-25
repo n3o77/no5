@@ -4,7 +4,7 @@ var prime = require('prime')
 var Promise = require('promise')
 var typeOf = require('prime/type')
 var tplItem = require('../../item')
-var DynPartial = require('./../DynPartial');
+var DynPartial = require('./../Partial');
 var array = {
     'forEach': require('prime/array/forEach'),
     'map': require('prime/array/map')

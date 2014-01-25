@@ -107,7 +107,7 @@ var TemplateParser = prime({
 	},
 
     getArrayVarType: function(value) {
-        if (array.every(value, lang.isObject)) return 'DynPartial'
+        if (array.every(value, lang.isObject)) return 'Partial'
         return 'Text'
     },
 

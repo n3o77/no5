@@ -7,7 +7,6 @@ var templateDescriptor = new TemplateDescriptor(templateLoader)
 
 templateDescriptor.registerVarTypeController('Partial', require('../VarTypeController/Partial'))
 templateDescriptor.registerVarTypeController('Text', require('../VarTypeController/Text'))
-templateDescriptor.registerVarTypeController('DynPartial', require('../VarTypeController/DynPartial'))
 templateDescriptor.registerVarTypeController('Date', require('../VarTypeController/Date'))
 templateDescriptor.registerVarTypeController('TestDate', require('../VarTypeController/Date'), {'format': '%m.%d.%Y'})
 templateDescriptor.registerVarTypeController('Number', require('../VarTypeController/Number'))

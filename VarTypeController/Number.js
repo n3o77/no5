@@ -19,7 +19,9 @@ var Number = prime({
         'decPoint': '.',
         'thousandsSep': ',',
         'pad': 1,
-        'padChar': null
+        'padChar': null,
+        'prefix': '',
+        'suffix': ''
     },
 
     constructor: function (varTypeTag, tplDesc, templateController, options) {
@@ -34,6 +36,8 @@ var Number = prime({
         var decimals = this.varTypeTag.decimals || this.options.decimals
         var decimalPoint = this.varTypeTag.decPoint || this.options.decPoint
         var thousandsSeperator = this.varTypeTag.thousandsSep || this.options.thousandsSep
+        var prefix = this.varTypeTag.prefix || this.options.prefix
+        var suffix = this.varTypeTag.suffix || this.options.suffix
 
         var fNum = number.currencyFormat(value, decimals, decimalPoint, thousandsSeperator)
 
@@ -43,7 +47,7 @@ var Number = prime({
             fNum = sNum.join(decimalPoint)
         }
 
-        return Promise.from(fNum);
+        return Promise.from(prefix.toString() + fNum.toString() + suffix.toString());
     }
 
 });

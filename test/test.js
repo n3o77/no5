@@ -48,6 +48,10 @@ describe('Template System', function() {
         it('should display number with pad options', function() {
             return expect(template.render(template.item('vt_number4', {'test': 12.55}))).to.eventually.be.eql('<div>__12.55</div>')
         })
+
+        it('should display number with prefix and suffix', function() {
+            return expect(template.render(template.item('vt_number5', {'test': 12.55}))).to.eventually.be.eql('<div>$12.55%</div>')
+        })
     })
 
     describe('Basics', function() {

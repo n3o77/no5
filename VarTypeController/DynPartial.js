@@ -34,7 +34,7 @@ var DynPartial = prime({
         })
 
         array.forEach(items, function(item) {
-            ps.push(this.templateController.getTemplateParser().parse(item))
+            ps.push(this.templateController.parse(item))
         }, this)
 
         return all(ps).then(function(templates) {

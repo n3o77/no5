@@ -12,6 +12,10 @@ describe('Template System', function() {
         it('should replace text with given parameters', function() {
             return expect(template.render(template.item('vt_text', {'test': 'foo'}))).to.eventually.be.eql('<div>foo</div>')
         })
+
+        it('should convert non text values to a string with JSON.stringify', function() {
+            return expect(template.render(template.item('vt_text', {'test': {'abc': 'def'}}))).to.eventually.be.eql('<div>{"abc":"def"}</div>')
+        })
     })
 
     describe('VarType Date', function() {
@@ -121,10 +125,27 @@ describe('Template System', function() {
             return expect(template.render(template.item('vt_autocast', {'test': '000123.9ABC'}))).to.eventually.be.eql('<div>000123.9ABC</div>')
         });
 
-        xit('should autocast item to partial');
-        xit('should autocast array with items to dynPartial');
-        xit('should autocast array with objects with item value to dynPartial (key = template, value = values)');
-        xit('should autocast array with no items to text');
+        it('should autocast item to partial', function() {
+            var item = template.item('vt_dynpartial1_p1', {'test': 'p1'});
+            return expect(template.render(template.item('vt_autocast', {'test': item}))).to.eventually.be.eql('<div>ap1b</div>')
+        });
+
+        it('should autocast array with items to dynPartial', function() {
+            var items = []
+            items.push(template.item('vt_dynpartial1_p1', {'test': 'p1'}, 2))
+            items.push(template.item('vt_dynpartial1_p2', {'test': 'p2'}, 1))
+
+            return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
+        });
+
+        it('should autocast array with objects with item value to dynPartial (key = template, value = values)', function() {
+            var items = [{'vt_dynpartial1_p1': {'test': 'p1'}},{'vt_dynpartial1_p2': {'test': 'p2'}}]
+            return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
+        });
+
+        it('should autocast array with no items to text', function() {
+            return expect(template.render(template.item('vt_autocast', {'test': [1, 2, 3]}))).to.eventually.be.eql('<div>[1,2,3]</div>')
+        });
     })
 
     describe('View Controller', function() {

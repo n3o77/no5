@@ -3,12 +3,18 @@
 var prime = require('prime');
 var Promise = require('promise')
 var all = Promise.all
+var bItem = require('./item')
+var isItem = require('./util/isItem')
 
+var array = {
+    'every': require('mout/array/every')
+}
 var object = {
     'get': require('mout/object/get')
 }
 var lang = {
     'isString': require('mout/lang/isString'),
+    'isObject': require('mout/lang/isObject'),
     'kindOf': require('mout/lang/kindOf')
 }
 
@@ -83,20 +89,32 @@ var TemplateParser = prime({
 	getVarType: function(type, value) {
 		if (type) return this.capitaliseFirstLetter(type)
         switch (lang.kindOf(value)) {
-            case "String":
-                return "Text"
-            case "Date":
-                return "Date"
-            case "Number":
-                return "Number"
-            case "Boolean":
-                return "Boolean"
-            case "Array":
-                return "Array"
+            case 'String':
+                return 'Text'
+            case 'Date':
+                return 'Date'
+            case 'Number':
+                return 'Number'
+            case 'Boolean':
+                return 'Boolean'
+            case 'Array':
+                return this.getArrayVarType(value)
+            case 'Object':
+                return this.getObjectVarType(value)
             default:
-                return "Text"
+                return 'Text'
         }
 	},
+
+    getArrayVarType: function(value) {
+        if (array.every(value, lang.isObject)) return 'DynPartial'
+        return 'Text'
+    },
+
+    getObjectVarType: function(value) {
+        if (isItem(value)) return 'Partial'
+        return 'Text'
+    },
 
 	capitaliseFirstLetter: function(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);

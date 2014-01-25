@@ -54,6 +54,36 @@ describe('Template System', function() {
         })
     })
 
+    describe('VarType Partial', function() {
+        xit('should replace date tag', function() {
+            return expect(template.render(template.item('vt_partial1', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>1970-01-02</div>')
+        })
+    })
+
+    describe('VarType DynPartial', function() {
+        xit('should replace date tag', function() {
+            return expect(template.render(template.item('vt_dynpartial1', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>1970-01-02</div>')
+        })
+    })
+
+    describe('VarType Boolean', function() {
+        it('should replace boolean tag with true', function() {
+            return expect(template.render(template.item('vt_boolean1', {'test': true}))).to.eventually.be.eql('<div>true</div>')
+        })
+
+        it('should replace boolean tag with false', function() {
+            return expect(template.render(template.item('vt_boolean1', {'test': false}))).to.eventually.be.eql('<div>false</div>')
+        })
+
+        it('should replace boolean tag with custom true', function() {
+            return expect(template.render(template.item('vt_boolean2', {'test': true}))).to.eventually.be.eql('<div>yes</div>')
+        })
+
+        it('should replace boolean tag with custom false', function() {
+            return expect(template.render(template.item('vt_boolean2', {'test': false}))).to.eventually.be.eql('<div>no</div>')
+        })
+    })
+
     describe('Basics', function() {
 
     })

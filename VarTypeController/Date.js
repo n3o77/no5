@@ -2,16 +2,19 @@
 
 var prime = require('prime');
 var Promise = require('promise');
-var moment = require('moment');
 var object = {
     'get': require('mout/object/get'),
     'merge': require('mout/object/merge')
 };
 
+var mDate = {
+    "strftime": require('mout/date/strftime')
+}
+
 var Date = prime({
 
     'options': {
-        'format': 'YYYY-MM-DD'
+        'format': '%Y-%m-%d'
     },
 
 	constructor: function (varTypeTag, tplDesc, templateController, options) {
@@ -22,10 +25,9 @@ var Date = prime({
 	},
 
 	render: function() {
-        var date = moment(object.get(this.item.values, this.varTypeTag.key));
         var format = this.varTypeTag.format || this.options.format;
 
-        return Promise.from(date.format(format));
+        return Promise.from(mDate.strftime(object.get(this.item.values, this.varTypeTag.key), format));
 	}
 
 });

@@ -104,8 +104,19 @@ describe('Template System', function() {
         })
     })
 
-    describe('Basics', function() {
+    describe('View Controller', function() {
+        xit('should manipulate all item vars')
+    })
 
+    describe('Auto Casting for VarTypes', function() {
+        xit('should autocast boolean to boolean');
+        xit('should autocast date to date');
+        xit('should autocast number to number');
+        xit('should autocast string to text');
+        xit('should autocast item to partial');
+        xit('should autocast array with items to dynPartial');
+        xit('should autocast array with objects with item value to dynPartial (key = template, value = values)');
+        xit('should autocast array with no items to text');
     })
 
 });

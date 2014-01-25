@@ -55,8 +55,8 @@ describe('Template System', function() {
     })
 
     describe('VarType Partial', function() {
-        xit('should replace date tag', function() {
-            return expect(template.render(template.item('vt_partial1', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>1970-01-02</div>')
+        it('should replace partial tag', function() {
+            return expect(template.render(template.item('vt_partial1'))).to.eventually.be.eql('<div>ab</div>')
         })
     })
 

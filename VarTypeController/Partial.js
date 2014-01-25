@@ -3,8 +3,11 @@
 var prime = require('prime');
 var item = require('../item')
 var object = {
-	'mixIn': require('prime/object/mixIn'),
-	'create': require('prime/object/create')
+	'merge': require('mout/object/merge'),
+}
+
+var lang = {
+    'deepClone': require('mout/lang/deepClone')
 }
 
 var Partial = prime({
@@ -16,7 +19,7 @@ var Partial = prime({
 	},
 
 	render: function() {
-		var desc = object.create(this.item)
+		var desc = lang.deepClone(this.item)
 		var render = true;
 
 		var ViewController = this.templateController.getViewController(this.varTypeTag.vc || this.varTypeTag.viewController)
@@ -25,12 +28,12 @@ var Partial = prime({
 			return viewController.renderPartial().then(function(render) {
 				if (render) return viewController.parse();
 			}).then(function(vcDesc) {
-				desc = object.mixIn(desc, vcDesc)
+				desc = object.merge(desc, vcDesc)
 				return this.templateController.parse(item(this.varTypeTag.tpl, desc, 0, render))
 			}.bind(this))
 		}
 
-		return this.templateController.getTemplateParser().parse(item(this.varTypeTag.tpl, desc, 0, render))
+		return this.templateController.parse(item(this.varTypeTag.tpl, desc, 0, render))
 	}
 
 });

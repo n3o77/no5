@@ -4,6 +4,8 @@ var expect = chai.expect
 var chaiAsPromised = require("chai-as-promised")
 chai.use(chaiAsPromised)
 
+var strftime = require('mout/date/strftime')
+
 var template = require('./tpl')
 
 describe('Template System', function() {
@@ -20,15 +22,19 @@ describe('Template System', function() {
 
     describe('VarType Date', function() {
         it('should replace date tag', function() {
-            return expect(template.render(template.item('vt_date1', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>1970-01-02</div>')
+            return expect(template.render(template.item('vt_date1', {'test': new Date(1970, 0, 2)}))).to.eventually.be.eql('<div>1970-01-02</div>')
         })
 
         it('should display date with custom format', function() {
-            return expect(template.render(template.item('vt_date2', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>02.01.1970</div>')
+            return expect(template.render(template.item('vt_date2', {'test': new Date(1970, 0, 2)}))).to.eventually.be.eql('<div>02.01.1970</div>')
         })
 
         it('should use testDate type with custom options', function() {
-            return expect(template.render(template.item('vt_date3', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>01.02.1970</div>')
+            return expect(template.render(template.item('vt_date3', {'test': new Date(1970, 0, 2)}))).to.eventually.be.eql('<div>01.02.1970</div>')
+        })
+
+        it('should parse date from ISO8601 string', function() {
+            return expect(template.render(template.item('vt_date4', {'test': '1970-01-02'}))).to.eventually.be.eql('<div>'+Date.UTC(1970, 0, 2) / 1000+'</div>')
         })
     })
 
@@ -130,7 +136,7 @@ describe('Template System', function() {
         });
 
         it('should autocast date to date', function() {
-            return expect(template.render(template.item('vt_autocast', {'test': new Date(86400000)}))).to.eventually.be.eql('<div>1970-01-02</div>')
+            return expect(template.render(template.item('vt_autocast', {'test': new Date(1970, 0, 2)}))).to.eventually.be.eql('<div>1970-01-02</div>')
         });
 
         it('should autocast number to number', function() {

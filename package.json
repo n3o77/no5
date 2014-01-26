@@ -1,8 +1,8 @@
 {
   "name": "tplsystem",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "ez template engine for node and client",
-  "main": "index.js",
+  "main": "TemplateDescriptor.js",
   "dependencies": {
     "prime": "~0.3.2",
     "promise": "~3.2.0",

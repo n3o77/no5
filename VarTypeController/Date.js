@@ -23,10 +23,10 @@ var VTDate = prime({
         'format': '%Y-%m-%d'
     },
 
-	constructor: function (varTypeTag, tplDesc, templateController, options) {
+	constructor: function (varTypeTag, item, templateController, options) {
         this.options = object.merge(this.options, options)
 		this.varTypeTag = varTypeTag
-		this.item = tplDesc
+		this.item = item
         this.templateController = templateController
 	},
 

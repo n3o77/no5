@@ -11,9 +11,9 @@ var object = {
 
 var Text = prime({
 
-	constructor: function (varTypeTag, tplDesc) {
+	constructor: function (varTypeTag, item, templateController, options) {
 		this.varTypeTag = varTypeTag
-		this.item = tplDesc
+		this.item = item
 	},
 
 	render: function() {

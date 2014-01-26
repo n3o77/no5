@@ -41,7 +41,7 @@ var TemplateParser = prime({
 	},
 
 	parseTemplate: function(tpl) {
-        if (!lang.isString(tpl)) throw error('Given Template is not a String: ' + tpl)
+        if (!lang.isString(tpl)) throw error('Given Template is not a String: ' + tpl + ' ' + JSON.stringify(this.item))
 		this.tpl = tpl
 		var vars = this.getVars(tpl)
 		if (vars.length === 0) return this.resolve(tpl)

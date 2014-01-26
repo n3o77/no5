@@ -7,7 +7,8 @@ var bItem = require('./item')
 var isItem = require('./util/isItem')
 
 var array = {
-    'every': require('mout/array/every')
+    'every': require('mout/array/every'),
+    'find': require('mout/array/find')
 }
 var object = {
     'get': require('mout/object/get')
@@ -46,18 +47,14 @@ var TemplateParser = prime({
 		if (vars.length === 0) return this.resolve(tpl)
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
-			var jsonVar = vars[i]
-            var objVar
-			try {
-				objVar = JSON.parse(jsonVar.replace(/'/g, '"'))
-			} catch (e) {
-				console.log('ERROR WITH VARTYPE: ', jsonVar);
-			}
+			var jsonVar = vars[i].jsonVar
+            var objVar = vars[i].tplVar
+            var pos = vars[i].pos
 
             var initVarType = function() {
                 var varType = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
                 var VarTypeControllerObj = this.varTypeController[varType]
-                if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available')
+                if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
                 var varTypeController = new VarTypeControllerObj.controller(objVar, this.item, this.templateController, VarTypeControllerObj.options)
                 return varTypeController.render().then(this.updateTemplate.bind(this, jsonVar))
@@ -123,14 +120,28 @@ var TemplateParser = prime({
 	getVars: function(source) {
 		var result = []
 		var bits = source.split("${")
+        var lastPos = {'line': 1, 'col': 1}
 		for (var i = 1; i < bits.length; i++) {
+            lastPos = this.getStartPosition(bits[i-1], lastPos)
 			var part = bits[i]
 			var pos = this.findClosingBrace("{"+part)
 			var varStr = '{'+part.substring(0, pos)
-			if (result.indexOf(varStr) === -1) result.push(varStr)
+            var parsed = this.parseVar(varStr, lastPos)
+			if (!array.find(parsed, {'jsonVar': varStr})) result.push(parsed)
 		}
 		return result
 	},
+
+    parseVar: function(jsonVar, pos) {
+        var tplVar
+        try {
+            tplVar = JSON.parse(jsonVar.replace(/'/g, '"'))
+        } catch (e) {
+            throw new Error('ERROR WITH VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
+        }
+
+        return {'tplVar': tplVar, 'pos': pos, 'jsonVar': jsonVar}
+    },
 
 	findClosingBrace: function(source) {
 		var length = source.length
@@ -149,7 +160,21 @@ var TemplateParser = prime({
 		}
 
 		return -1;
-	}
+	},
+
+    getStartPosition: function(bit, lastPos) {
+        var m = bit.match(/\r?\n/g)
+        var line = (m||[]).length
+        var col = 0
+        if (m && m.length > 0) {
+            col = bit.length - bit.lastIndexOf(m[m.length - 1])
+        } else {
+            col = bit.length
+        }
+        if (line === 0) col += lastPos.col + 2
+
+        return {'line': line + lastPos.line, 'col': col}
+    }
 
 });
 

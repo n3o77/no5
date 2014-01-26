@@ -95,23 +95,15 @@ var TemplateParser = prime({
             case 'Boolean':
                 return 'Boolean'
             case 'Array':
-                return this.getArrayVarType(value)
+                if (array.every(value, lang.isObject)) return 'Partial'
+                return 'Text'
             case 'Object':
-                return this.getObjectVarType(value)
+                if (isItem(value)) return 'Partial'
+                return 'Text'
             default:
                 return 'Text'
         }
 	},
-
-    getArrayVarType: function(value) {
-        if (array.every(value, lang.isObject)) return 'Partial'
-        return 'Text'
-    },
-
-    getObjectVarType: function(value) {
-        if (isItem(value)) return 'Partial'
-        return 'Text'
-    },
 
 	capitaliseFirstLetter: function(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1);

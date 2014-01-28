@@ -1,7 +1,7 @@
 'use strict';
 
 var prime = require('prime');
-var VTC = require('./VarTypeController')
+var VTC = require('../VarTypeController')
 var Promise = require('promise');
 var lang = {
     'isDate': require('mout/lang/isDate'),

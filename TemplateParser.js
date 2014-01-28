@@ -30,14 +30,12 @@ var TemplateParser = prime({
 	},
 
 	parse: function(tpl) {
-		var p = new Promise(function(resolve, reject) {
+		return new Promise(function(resolve, reject) {
 			this.resolve = resolve
 			this.reject = reject
+
+            this.parseTemplate(tpl)
 		}.bind(this))
-
-        this.parseTemplate(tpl)
-
-        return p
 	},
 
 	parseTemplate: function(tpl) {

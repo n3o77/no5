@@ -194,4 +194,10 @@ describe('Template System', function() {
         })
     })
 
+    describe('Session', function() {
+        it('should use session variable to render the date format', function() {
+            return expect(template.render(template.item('session_date', {'test': new Date(1970, 0, 2)}), {'formats': {'date': '%m.%d.%Y'}})).to.eventually.be.eql('<div>01.02.1970</div>')
+        })
+    })
+
 });

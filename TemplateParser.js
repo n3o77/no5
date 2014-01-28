@@ -11,12 +11,17 @@ var array = {
     'find': require('mout/array/find')
 }
 var object = {
-    'get': require('mout/object/get')
+    'get': require('mout/object/get'),
+    'map': require('mout/object/map')
 }
 var lang = {
     'isString': require('mout/lang/isString'),
     'isObject': require('mout/lang/isObject'),
     'kindOf': require('mout/lang/kindOf')
+}
+
+var string = {
+    'startsWith': require('mout/string/startsWith')
 }
 
 var TemplateParser = prime({
@@ -55,7 +60,12 @@ var TemplateParser = prime({
                 var VarTypeControllerObj = this.varTypeController[varType]
                 if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
-                var varTypeController = new VarTypeControllerObj.controller(tplVar, this.item, this.templateController, VarTypeControllerObj.options)
+                var options = object.map(VarTypeControllerObj.options, function(value) {
+                    if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
+                    return value
+                }, this)
+
+                var varTypeController = new VarTypeControllerObj.controller(tplVar, this.item, this.templateController, options)
                 return varTypeController.render().then(this.updateTemplate.bind(this, jsonVar))
             }.bind(this)
 

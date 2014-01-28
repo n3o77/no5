@@ -47,16 +47,17 @@ var TemplateParser = prime({
 		if (vars.length === 0) return this.resolve(tpl)
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
-			var jsonVar = vars[i].jsonVar
-            var objVar = vars[i].tplVar
-            var pos = vars[i].pos
+            var tplVar = vars[i];
+            var jsonVar = tplVar.jsonVar
+            var objVar = tplVar.tplVar
+            var pos = tplVar.pos
 
             var initVarType = function() {
                 var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
                 var VarTypeControllerObj = this.varTypeController[varType]
                 if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
-                var varTypeController = new VarTypeControllerObj.controller(objVar, this.item, this.templateController, VarTypeControllerObj.options)
+                var varTypeController = new VarTypeControllerObj.controller(tplVar, this.item, this.templateController, VarTypeControllerObj.options)
                 return varTypeController.render().then(this.updateTemplate.bind(this, jsonVar))
             }.bind(this)
 

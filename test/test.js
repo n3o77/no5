@@ -186,7 +186,7 @@ describe('Template System', function() {
         })
 
         it('should throw an error that the render method is missing in "Wrong" VarTypeController', function() {
-            return expect(template.render(template.item('err_t3', {'test': 'foo'}))).to.eventually.be.rejectedWith('Render method not implemented in VarTypeConrtoller: Wrong')
+            return expect(template.render(template.item('err_t3', {'test': 'foo'}))).to.eventually.be.rejectedWith('Render method not implemented in VarTypeConrtoller: Wrong From:err_t3:1:8')
         })
     })
 

@@ -16,7 +16,7 @@ var ViewController = prime({
     },
 
     parse: function() {
-        throw Error('Parse method not implemented in ViewController: ' + this.varTypeTag.type + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
+        throw Error('Parse method not implemented in ViewController: ' + (this.varTypeTag.vc || this.varTypeTag.viewController) + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
     }
 
 })

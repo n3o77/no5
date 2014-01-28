@@ -188,6 +188,10 @@ describe('Template System', function() {
         it('should throw an error that the render method is missing in "Wrong" VarTypeController', function() {
             return expect(template.render(template.item('err_t3', {'test': 'foo'}))).to.eventually.be.rejectedWith('Render method not implemented in VarTypeConrtoller: Wrong From:err_t3:1:8')
         })
+
+        it('should throw an error that the parse method is missing in "Wrong" ViewController', function() {
+            return expect(template.render(template.item('err_t4', {'test': 'foo'}))).to.eventually.be.rejectedWith('Parse method not implemented in ViewController: Wrong From:err_t4:1:8')
+        })
     })
 
 });

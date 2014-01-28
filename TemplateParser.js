@@ -63,7 +63,7 @@ var TemplateParser = prime({
 
             var ViewControllerObj = this.templateController.getViewController(objVar.vc || objVar.viewController)
             if (ViewControllerObj) {
-                var viewController = new ViewControllerObj.controller(objVar, this.item, this.templateController, ViewControllerObj.options)
+                var viewController = new ViewControllerObj.controller(tplVar, this.item, this.templateController, ViewControllerObj.options)
                 ps.push(viewController.parse().then(initVarType))
             } else {
                 ps.push(initVarType())

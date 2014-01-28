@@ -86,24 +86,32 @@ var TemplateParser = prime({
 
 	getVarType: function(type, value) {
 		if (type) return this.capitaliseFirstLetter(type)
+        var result = 'Text'
         switch (lang.kindOf(value)) {
             case 'String':
-                return 'Text'
+                result = 'Text'
+                break
             case 'Date':
-                return 'Date'
+                result = 'Date'
+                break
             case 'Number':
-                return 'Number'
+                result = 'Number'
+                break
             case 'Boolean':
-                return 'Boolean'
+                result = 'Boolean'
+                break
             case 'Array':
-                if (array.every(value, lang.isObject)) return 'Partial'
-                return 'Text'
+                if (array.every(value, lang.isObject)) result = 'Partial'
+                break
             case 'Object':
-                if (isItem(value)) return 'Partial'
-                return 'Text'
+                if (isItem(value)) result = 'Partial'
+                break
             default:
                 return 'Text'
         }
+
+        if (!this.varTypeController[result]) return 'Text'
+        return result
 	},
 
 	capitaliseFirstLetter: function(string) {

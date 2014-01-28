@@ -1,6 +1,7 @@
 'use strict';
 
 var prime = require('prime');
+var VTC = require('./VarTypeController')
 var Promise = require('promise');
 var object = {
     'get': require('mout/object/get'),
@@ -14,6 +15,7 @@ var number = {
 
 var Number = prime({
 
+    inherits: VTC,
     options: {
         'decimals': 0,
         'decPoint': '.',
@@ -28,6 +30,7 @@ var Number = prime({
         this.options = object.merge(this.options, options)
         this.varTypeTag = varTypeTag
         this.item = item
+        this.templateController = templateController
     },
 
     render: function() {

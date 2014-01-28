@@ -1,6 +1,7 @@
 'use strict';
 
 var prime = require('prime');
+var VTC = require('./VarTypeController')
 var Promise = require('promise');
 var lang = {
     'isDate': require('mout/lang/isDate'),
@@ -18,6 +19,8 @@ var mDate = {
 }
 
 var VTDate = prime({
+
+    inherits: VTC,
 
     'options': {
         'format': '%Y-%m-%d'

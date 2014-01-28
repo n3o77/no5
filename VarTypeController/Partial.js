@@ -1,6 +1,7 @@
 'use strict';
 
 var prime = require('prime')
+var VTC = require('./VarTypeController')
 var bItem = require('../item')
 var isItem = require('../util/isItem')
 var lang = {
@@ -23,6 +24,8 @@ var Promise = require('promise')
 var all = Promise.all
 
 var Partial = prime({
+
+    inherits: VTC,
 
 	constructor: function (varTypeTag, item, tplController) {
 		this.templateController = tplController

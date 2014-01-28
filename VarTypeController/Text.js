@@ -1,6 +1,7 @@
 'use strict';
 
 var prime = require('prime');
+var VTC = require('./VarTypeController')
 var Promise = require('promise')
 var lang = {
     'isString': require('mout/lang/isString')
@@ -10,6 +11,8 @@ var object = {
 };
 
 var Text = prime({
+
+    inherits: VTC,
 
 	constructor: function (varTypeTag, item, templateController, options) {
 		this.varTypeTag = varTypeTag

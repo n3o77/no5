@@ -52,7 +52,7 @@ var TemplateParser = prime({
             var pos = vars[i].pos
 
             var initVarType = function() {
-                var varType = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
+                var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
                 var VarTypeControllerObj = this.varTypeController[varType]
                 if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 

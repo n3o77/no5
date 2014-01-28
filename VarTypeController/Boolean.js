@@ -1,6 +1,7 @@
 'use strict';
 
 var prime = require('prime');
+var VTC = require('./VarTypeController')
 var Promise = require('promise')
 var object = {
     'get': require('mout/object/get'),
@@ -8,6 +9,8 @@ var object = {
 };
 
 var Boolean = prime({
+
+    inherits: VTC,
 
     options: {
         "true": "true",

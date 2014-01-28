@@ -14,9 +14,8 @@ var Text = prime({
 
     inherits: VTC,
 
-	constructor: function (varTypeTag, item, templateController, options) {
-		this.varTypeTag = varTypeTag
-		this.item = item
+	constructor: function () {
+        VTC.apply(this, arguments)
 	},
 
 	render: function() {

@@ -26,11 +26,8 @@ var Number = prime({
         'suffix': ''
     },
 
-    constructor: function (varTypeTag, item, templateController, options) {
-        this.options = object.merge(this.options, options)
-        this.varTypeTag = varTypeTag
-        this.item = item
-        this.templateController = templateController
+    constructor: function () {
+        VTC.apply(this, arguments)
     },
 
     render: function() {

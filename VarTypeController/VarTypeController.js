@@ -1,6 +1,10 @@
 'use strict';
 
 var prime = require('prime')
+var object = {
+    'merge': require('mout/object/merge')
+};
+
 
 var VarTypeController = prime({
 

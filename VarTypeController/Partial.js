@@ -27,10 +27,8 @@ var Partial = prime({
 
     inherits: VTC,
 
-	constructor: function (varTypeTag, item, tplController) {
-		this.templateController = tplController
-		this.varTypeTag = varTypeTag
-		this.item = item
+	constructor: function () {
+        VTC.apply(this, arguments)
 	},
 
 	render: function() {

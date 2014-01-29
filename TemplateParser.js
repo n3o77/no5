@@ -111,7 +111,8 @@ var TemplateParser = prime({
 	getVarType: function(type, value) {
 		if (type) return this.capitaliseFirstLetter(type)
         var result = 'Text'
-        switch (lang.kindOf(value)) {
+        var kind = lang.kindOf(value);
+        switch (kind) {
             case 'String':
                 result = 'Text'
                 break
@@ -134,7 +135,11 @@ var TemplateParser = prime({
                 return 'Text'
         }
 
-        if (!this.varTypeController[result]) return 'Text'
+        if (!this.varTypeController[result]) {
+            this.log.debug('Autocasting Value Type:', kind, ' Autocast to:', result, 'Value:', value)
+            return 'Text'
+        }
+        this.log.debug('Autocasting Value Type:', kind, ' Autocast to:', result, 'Value:', value)
         return result
 	},
 

@@ -16,10 +16,11 @@ var VarTypeController = prime({
         this.varTypeTag = objVar.tplVar
         this.item = item
         this.templateController = templateController
+        this.__log = this.templateController.log
     },
 
     render: function() {
-        throw Error('Render method not implemented in VarTypeConrtoller: ' + this.varTypeTag.type + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
+        this.__log.error('Render method not implemented in VarTypeConrtoller: ' + this.varTypeTag.type + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
     }
 
 })

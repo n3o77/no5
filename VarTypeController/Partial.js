@@ -43,7 +43,7 @@ var Partial = prime({
         var ps = []
         if (!items) return Promise.from('')
         if (isItem(items)) return this.templateController.parse(items)
-        if (!lang.isArray(items)) throw new Error('Only type item or array is supported. You gave: ' + lang.kindOf(items) + ' ' + items)
+        if (!lang.isArray(items)) this.__log.error('Only type item or array is supported. You gave: ' + lang.kindOf(items) + ' ' + items)
 
         items.sort(function(a, b) {
             if (!a.pos && !b.pos) return 0

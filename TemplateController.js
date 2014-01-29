@@ -2,6 +2,7 @@
 
 var Promise = require('promise')
 var prime = require('prime')
+var Log = require('./Log')
 var TemplateParser = require('./TemplateParser')
 var lang = {
     'deepClone': require('mout/lang/deepClone')
@@ -21,6 +22,7 @@ var TemplateController = prime({
 
         this.varTypeController = {}
 		this.viewController = {}
+        this.log = new Log(this.constants.mode, console.log, this.constants.throwError)
 	},
 
     setSession: function(session) {
@@ -49,7 +51,7 @@ var TemplateController = prime({
 	},
 
 	parse: function(item) {
-        if (!item.template) throw new Error('No Template Given')
+        if (!item.template) this.log.error('No Template Given', item)
         if (!item.render) return Promise.from('')
 
         return this.templateLoader.loadTemplate(item.template).then(function(tpl) {

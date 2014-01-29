@@ -33,6 +33,7 @@ var TemplateParser = prime({
 		this.varTypeController = varTypeController
 		this.templateController = templateController
         this.item = item
+        this.log = templateController.log
 	},
 
 	parse: function(tpl) {
@@ -45,7 +46,7 @@ var TemplateParser = prime({
 	},
 
 	parseTemplate: function(tpl) {
-        if (!lang.isString(tpl)) throw error('Given Template is not a String: ' + tpl + ' ' + JSON.stringify(this.item))
+        if (!lang.isString(tpl)) this.log.error('Given Template is not a String: ' + tpl + ' ' + JSON.stringify(this.item))
 		this.tpl = tpl
 		var vars = this.getVars(tpl)
 		if (vars.length === 0) return this.resolve(tpl)
@@ -59,7 +60,7 @@ var TemplateParser = prime({
             var initVarType = function() {
                 var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
                 var VarTypeControllerObj = this.varTypeController[varType]
-                if (!VarTypeControllerObj) throw new Error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+                if (!VarTypeControllerObj) this.log.error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
                 var options = object.map(VarTypeControllerObj.options, function(value) {
                     if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
@@ -149,7 +150,7 @@ var TemplateParser = prime({
         try {
             tplVar = JSON.parse(jsonVar.replace(/'/g, '"'))
         } catch (e) {
-            throw new Error('ERROR WITH VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
+            this.log.error('ERROR WITH VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
         }
 
         return {'tplVar': tplVar, 'pos': pos, 'jsonVars': [jsonVar]}

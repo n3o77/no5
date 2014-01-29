@@ -7,12 +7,23 @@ var object = {
     'forOwn': require('mout/object/forOwn')
 }
 
+var ENUM_MODE = {
+    'PRODUCTION': 'quiet',
+    'DEVELOP': 'info',
+    'DEBUG': 'debug'
+}
+
 var TemplateDescriptor = prime({
 
     'constants': {
         'language': 'en_EN',
-        'dateFormat': 'DD.MM.YYYY'
+        'dateFormat': 'DD.MM.YYYY',
+        'mode': ENUM_MODE.DEVELOP,
+        'throwError': false
     },
+
+    'ENUM_MODE': ENUM_MODE,
+
     'varTypeController': null,
     'viewController': null,
 

@@ -13,10 +13,11 @@ var ViewController = prime({
         this.varTypeTag = objVar.tplVar
         this.item = item
         this.templateController = templateController
+        this.__log = this.templateController.log
     },
 
     parse: function() {
-        throw Error('Parse method not implemented in ViewController: ' + (this.varTypeTag.vc || this.varTypeTag.viewController) + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
+        this.__log.error('Parse method not implemented in ViewController: ' + (this.varTypeTag.vc || this.varTypeTag.viewController) + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
     }
 
 })

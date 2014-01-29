@@ -32,7 +32,7 @@ var TemplateController = prime({
     },
 
     getConstants: function() {
-        return lang.deepClone(this.constants)
+        return lang.deepClone(this.constants || {})
     },
 
 	registerVarTypeController: function(name, controller, options) {

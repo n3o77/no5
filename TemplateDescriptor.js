@@ -39,7 +39,7 @@ var TemplateDescriptor = prime({
     },
 
     getTemplateController: function() {
-        var tplController = new TemplateController(this.templateLoader)
+        var tplController = new TemplateController(this.templateLoader, this.constants)
 
         object.forOwn(this.varTypeController, function(item, name) {
             tplController.registerVarTypeController(name, item.controller, item.options)

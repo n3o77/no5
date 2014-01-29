@@ -7,6 +7,7 @@ var bItem = require('./item')
 var isItem = require('./util/isItem')
 
 var array = {
+    'forEach': require('mout/array/forEach'),
     'every': require('mout/array/every'),
     'find': require('mout/array/find')
 }
@@ -51,7 +52,7 @@ var TemplateParser = prime({
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
             var tplVar = vars[i];
-            var jsonVar = tplVar.jsonVar
+            var jsonVars = tplVar.jsonVars
             var objVar = tplVar.tplVar
             var pos = tplVar.pos
 
@@ -66,7 +67,7 @@ var TemplateParser = prime({
                 }, this)
 
                 var varTypeController = new VarTypeControllerObj.controller(tplVar, this.item, this.templateController, options)
-                return varTypeController.render().then(this.updateTemplate.bind(this, jsonVar))
+                return varTypeController.render().then(this.updateTemplate.bind(this, jsonVars))
             }.bind(this)
 
             var ViewControllerObj = this.templateController.getViewController(objVar.vc || objVar.viewController)
@@ -83,9 +84,11 @@ var TemplateParser = prime({
 		}.bind(this), this.reject)
 	},
 
-	updateTemplate: function(jsonVar, result) {
-		var regex = new RegExp("\\$"+this.escapeVar(jsonVar), 'g')
-		this.tpl = this.tpl.replace(regex, result)
+	updateTemplate: function(jsonVars, result) {
+        array.forEach(jsonVars, function(jsonVar) {
+            var regex = new RegExp("\\$"+this.escapeVar(jsonVar), 'g')
+            this.tpl = this.tpl.replace(regex, result)
+        }, this)
 	},
 
 	escapeVar: function(jvar) {
@@ -135,8 +138,8 @@ var TemplateParser = prime({
 			var part = bits[i]
 			var pos = this.findClosingBrace("{"+part)
 			var varStr = '{'+part.substring(0, pos)
-            var parsed = this.parseVar(varStr, lastPos)
-			if (!array.find(parsed, {'jsonVar': varStr})) result.push(parsed)
+
+            this.addVarToResults(this.parseVar(varStr, lastPos), result)
 		}
 		return result
 	},
@@ -149,7 +152,13 @@ var TemplateParser = prime({
             throw new Error('ERROR WITH VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
         }
 
-        return {'tplVar': tplVar, 'pos': pos, 'jsonVar': jsonVar}
+        return {'tplVar': tplVar, 'pos': pos, 'jsonVars': [jsonVar]}
+    },
+
+    addVarToResults: function(parsed, result) {
+        var vt = array.find(result, {'tplVar': parsed.tplVar});
+        if (!vt) return result.push(parsed)
+        if (!array.find(vt.jsonVars, {'jsonVars': parsed.jsonVars[0]})) vt.jsonVars.push(parsed.jsonVars[0])
     },
 
 	findClosingBrace: function(source) {

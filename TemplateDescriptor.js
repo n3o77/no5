@@ -7,11 +7,7 @@ var object = {
     'forOwn': require('mout/object/forOwn')
 }
 
-var ENUM_MODE = {
-    'PRODUCTION': 'quiet',
-    'DEVELOP': 'info',
-    'DEBUG': 'debug'
-}
+var ENUM_MODE = require('./enums').ENUM_MODE
 
 var TemplateDescriptor = prime({
 
@@ -71,5 +67,7 @@ var TemplateDescriptor = prime({
     }
 
 });
+
+TemplateDescriptor.ENUM_MODE = ENUM_MODE
 
 module.exports = TemplateDescriptor

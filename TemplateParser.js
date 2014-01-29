@@ -5,6 +5,7 @@ var Promise = require('promise')
 var all = Promise.all
 var bItem = require('./item')
 var isItem = require('./util/isItem')
+var ENUM_MODE = require('./enums').ENUM_MODE
 
 var array = {
     'forEach': require('mout/array/forEach'),
@@ -34,6 +35,7 @@ var TemplateParser = prime({
 		this.templateController = templateController
         this.item = item
         this.log = templateController.log
+        this.mode = templateController.getConstants().mode
 	},
 
 	parse: function(tpl) {
@@ -68,7 +70,7 @@ var TemplateParser = prime({
                 }, this)
 
                 var varTypeController = new VarTypeControllerObj.controller(tplVar, this.item, this.templateController, options)
-                return varTypeController.render().then(this.updateTemplate.bind(this, jsonVars))
+                return varTypeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
             }.bind(this)
 
             var ViewControllerObj = this.templateController.getViewController(objVar.vc || objVar.viewController)
@@ -85,7 +87,17 @@ var TemplateParser = prime({
 		}.bind(this), this.reject)
 	},
 
-	updateTemplate: function(jsonVars, result) {
+	updateTemplate: function(jsonVars, item, result) {
+        this.log.debug('Replacing tplVars (', jsonVars, ') with content:', result, 'item:', item)
+
+        if (this.mode === ENUM_MODE.DEVELOP) {
+            var vcC = ''
+            if (item.vc || item.viewController) vcC = 'ViewController: ' + (item.vc || item.viewController)
+            var beginC = '<!-- START TEMPLATE: "' + item.template + '" ' + vcC + ' -->\n'
+            var endC = '\n<!-- END TEMPLATE: "' + item.template + '" ' + vcC + ' -->'
+            result = beginC + result + endC
+        }
+
         array.forEach(jsonVars, function(jsonVar) {
             var regex = new RegExp("\\$"+this.escapeVar(jsonVar), 'g')
             this.tpl = this.tpl.replace(regex, result)

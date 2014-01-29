@@ -3,7 +3,7 @@ var TemplateDescriptor = require('../TemplateDescriptor')
 var TemplateLoader = require('../TemplateLoader')
 
 var templateLoader = new TemplateLoader({'templates': __dirname + '/templates'})
-var templateDescriptor = new TemplateDescriptor(templateLoader, {'throwError': true})
+var templateDescriptor = new TemplateDescriptor(templateLoader, {'throwError': true, 'mode': TemplateDescriptor.ENUM_MODE.PRODUCTION})
 
 templateDescriptor.registerVarTypeController('Partial', require('../VarTypeController/Partial'))
 templateDescriptor.registerVarTypeController('Text', require('../VarTypeController/Text'))

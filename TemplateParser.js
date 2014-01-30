@@ -14,12 +14,14 @@ var array = {
 }
 var object = {
     'get': require('mout/object/get'),
-    'map': require('mout/object/map')
+    'map': require('mout/object/map'),
+    'deepEquals': require('mout/object/deepEquals')
 }
 var lang = {
     'isString': require('mout/lang/isString'),
     'isObject': require('mout/lang/isObject'),
-    'kindOf': require('mout/lang/kindOf')
+    'kindOf': require('mout/lang/kindOf'),
+    'deepClone': require('mout/lang/deepClone')
 }
 
 var string = {
@@ -58,8 +60,10 @@ var TemplateParser = prime({
             var jsonVars = tplVar.jsonVars
             var objVar = tplVar.tplVar
             var pos = tplVar.pos
+            var origItem
 
             var initVarType = function() {
+                if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from ViewController. Orig: ', origItem, ' New:', this.item)
                 var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
                 var VarTypeControllerObj = this.varTypeController[varType]
                 if (!VarTypeControllerObj) this.log.error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
@@ -75,6 +79,7 @@ var TemplateParser = prime({
 
             var ViewControllerObj = this.templateController.getViewController(objVar.vc || objVar.viewController)
             if (ViewControllerObj) {
+                if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
                 var viewController = new ViewControllerObj.controller(tplVar, this.item, this.templateController, ViewControllerObj.options)
                 ps.push(viewController.parse().then(initVarType))
             } else {

@@ -22,7 +22,7 @@ var TemplateController = prime({
 
         this.varTypeController = {}
 		this.viewController = {}
-        this.log = new Log(this.constants.mode, console.log, this.constants.throwError)
+        this.log = new Log(this.constants.mode, this.constants.logger, this.constants.throwError)
 	},
 
     setSession: function(session) {

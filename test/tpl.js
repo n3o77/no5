@@ -1,4 +1,3 @@
-var Promise = require('promise')
 var TemplateDescriptor = require('../TemplateDescriptor')
 var TemplateLoader = require('../TemplateLoader')
 

@@ -1,6 +1,6 @@
 {
   "name": "tplsystem",
-  "version": "0.1.0",
+  "version": "0.1.0Beta1",
   "description": "ez template engine for node and client",
   "main": "TemplateDescriptor.js",
   "dependencies": {

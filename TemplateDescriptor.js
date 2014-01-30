@@ -60,6 +60,7 @@ var TemplateDescriptor = prime({
     },
 
     parse: function(item, session) {
+        if (!item) throw new Error('Need input!')
         var tplController = this.getTemplateController()
         tplController.setSession(session)
 

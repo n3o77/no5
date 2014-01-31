@@ -14,7 +14,7 @@ var Test = prime({
 
     parse: function() {
         return new Promise(function(resolve, reject) {
-            this.item.values.test = new Date(1970, 0, 2)
+            this.values.test = new Date(1970, 0, 2)
             resolve()
         }.bind(this));
     }

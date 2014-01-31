@@ -171,7 +171,7 @@ describe('Template System', function() {
     })
 
     describe('View Controller', function() {
-        it('should manipulate all item vars', function() {
+        it('should manipulate all item values', function() {
             return expect(template.render(template.item('vt_viewController', {'test': "abc"}))).to.eventually.be.eql('<div>1970-01-02</div>')
         })
     })

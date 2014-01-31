@@ -57,6 +57,7 @@ var TemplateParser = prime({
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
             var tplVar = vars[i];
+            tplVar.template = this.item.template
             var jsonVars = tplVar.jsonVars
             var objVar = tplVar.tplVar
             var pos = tplVar.pos
@@ -80,7 +81,7 @@ var TemplateParser = prime({
             var ViewControllerObj = this.templateController.getViewController(objVar.vc || objVar.viewController)
             if (ViewControllerObj) {
                 if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
-                var viewController = new ViewControllerObj.controller(tplVar, this.item, this.templateController, ViewControllerObj.options)
+                var viewController = new ViewControllerObj.controller(tplVar, this.item.values, this.templateController, ViewControllerObj.options)
                 ps.push(viewController.parse().then(initVarType))
             } else {
                 ps.push(initVarType())

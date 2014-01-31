@@ -25,7 +25,8 @@ var lang = {
 }
 
 var string = {
-    'startsWith': require('mout/string/startsWith')
+    'startsWith': require('mout/string/startsWith'),
+    'trim': require('mout/string/trim')
 }
 
 var TemplateParser = prime({
@@ -173,6 +174,8 @@ var TemplateParser = prime({
         } catch (e) {
             this.log.error('ERROR WITH VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
         }
+
+        if (!tplVar.key || string.trim(tplVar.key) === "") this.log.error('NO KEY SET IN VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
         return {'tplVar': tplVar, 'pos': pos, 'jsonVars': [jsonVar]}
     },

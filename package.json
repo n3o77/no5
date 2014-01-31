@@ -1,5 +1,5 @@
 {
-  "name": "tplsystem",
+  "name": "no5",
   "version": "0.1.0Beta1",
   "description": "ez template engine for node and client",
   "main": "TemplateDescriptor.js",

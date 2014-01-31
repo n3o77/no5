@@ -54,7 +54,7 @@ var TemplateParser = prime({
         if (!lang.isString(tpl)) this.log.error('Given Template is not a String: ' + tpl + ' ' + JSON.stringify(this.item))
 		this.tpl = tpl
 		var vars = this.getVars(tpl)
-		if (vars.length === 0) return this.resolve(tpl)
+		if (vars.length === 0) return this.complete()
 		var ps = []
 		for (var i = 0; i < vars.length; i++) {
             var tplVar = vars[i];
@@ -89,18 +89,20 @@ var TemplateParser = prime({
             }
 		}
 
-		return all(ps).then(function() {
-            var beginC = '', endC = ''
-            if (this.mode === ENUM_MODE.DEVELOP) {
-                var vcC = ''
-                if (this.item.vc || this.item.viewController) vcC = 'ViewController: ' + (this.item.vc || this.item.viewController)
-                beginC = '<!-- START TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->\n'
-                endC = '\n<!-- END TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->'
-            }
-
-			this.resolve(beginC + this.tpl + endC)
-		}.bind(this), this.reject)
+		return all(ps).then(this.complete.bind(this), this.reject)
 	},
+
+    complete: function() {
+        var beginC = '', endC = ''
+        if (this.mode === ENUM_MODE.DEVELOP) {
+            var vcC = ''
+            if (this.item.vc || this.item.viewController) vcC = 'ViewController: ' + (this.item.vc || this.item.viewController)
+            beginC = '<!-- START TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->\n'
+            endC = '\n<!-- END TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->'
+        }
+
+        this.resolve(beginC + this.tpl + endC)
+    },
 
 	updateTemplate: function(jsonVars, item, result) {
         this.log.debug('Replacing tplVars (', jsonVars, ') with content:', result, 'item:', item)

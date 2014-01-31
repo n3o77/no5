@@ -90,21 +90,20 @@ var TemplateParser = prime({
 		}
 
 		return all(ps).then(function() {
-			this.resolve(this.tpl)
+            var beginC = '', endC = ''
+            if (this.mode === ENUM_MODE.DEVELOP) {
+                var vcC = ''
+                if (this.item.vc || this.item.viewController) vcC = 'ViewController: ' + (this.item.vc || this.item.viewController)
+                beginC = '<!-- START TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->\n'
+                endC = '\n<!-- END TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->'
+            }
+
+			this.resolve(beginC + this.tpl + endC)
 		}.bind(this), this.reject)
 	},
 
 	updateTemplate: function(jsonVars, item, result) {
         this.log.debug('Replacing tplVars (', jsonVars, ') with content:', result, 'item:', item)
-
-        if (this.mode === ENUM_MODE.DEVELOP) {
-            var vcC = ''
-            if (item.vc || item.viewController) vcC = 'ViewController: ' + (item.vc || item.viewController)
-            var beginC = '<!-- START TEMPLATE: "' + item.template + '" ' + vcC + ' -->\n'
-            var endC = '\n<!-- END TEMPLATE: "' + item.template + '" ' + vcC + ' -->'
-            result = beginC + result + endC
-        }
-
         array.forEach(jsonVars, function(jsonVar) {
             var regex = new RegExp("\\$"+this.escapeVar(jsonVar), 'g')
             this.tpl = this.tpl.replace(regex, result)

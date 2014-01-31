@@ -131,10 +131,8 @@ var TemplateParser = prime({
                 result = 'Boolean'
                 break
             case 'Array':
-                if (array.every(value, lang.isObject)) result = 'Partial'
-                break
             case 'Object':
-                if (isItem(value)) result = 'Partial'
+                result = 'Partial'
                 break
             default:
                 return 'Text'

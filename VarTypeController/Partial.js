@@ -55,7 +55,8 @@ var Partial = prime({
         array.forEach(items, function(item, idx) {
             if (lang.isObject(item) && !isItem(item)) item = this.castObjectToItem(item, idx)
             if (lang.isString(item)) item = bItem(item, lang.deepClone(this.item), idx, true)
-            ps.push(this.templateController.parse(item))
+            if (isItem(item)) return ps.push(this.templateController.parse(item))
+            ps.push(Promise.from(item))
         }, this)
 
         return all(ps).then(function(templates) {

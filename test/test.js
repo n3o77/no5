@@ -165,8 +165,8 @@ describe('Template System', function() {
             return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
         });
 
-        it('should autocast array with no items to text', function() {
-            return expect(template.render(template.item('vt_autocast', {'test': [1, 2, 3]}))).to.eventually.be.eql('<div>[1,2,3]</div>')
+        it('should autocast array to partial', function() {
+            return expect(template.render(template.item('vt_autocast', {'test': [1, 'vt_partial3_p1', 3]}))).to.eventually.be.eql('<div>1ab3</div>')
         });
     })
 

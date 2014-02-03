@@ -132,7 +132,7 @@ describe('Template System', function() {
 
     describe('Auto Casting for VarTypes', function() {
         it('should autocast boolean to boolean', function() {
-            return expect(template.render(template.item('vt_autocast', {'test': true}))).to.eventually.be.eql('<div>yes</div>')
+            return expect(template.render(template.item('vt_autocast', {'test': true}))).to.eventually.be.eql('<div>true</div>')
         });
 
         it('should autocast date to date', function() {

@@ -208,4 +208,14 @@ describe('Template System', function() {
         })
     })
 
+    describe('Form Helpers', function() {
+        it('should return option elements', function() {
+            return expect(template.render(template.item('form/option1', {'options': {'key1': 'value1', 'key2': 'value2', 'key3': 'value3'}, 'test': [{'key2': 'value2'},{'key3': 'value3'}]}))).to.eventually.be.eql('<select name="test" id="test">\n    <option value="key1">value1</option><option value="key2" selected>value2</option><option value="key3" selected>value3</option>\n</select>')
+        })
+
+        it('should return option elements', function() {
+            return expect(template.render(template.item('form/option1', {'options': [{'value': 'key1', 'label': 'value1'}, {'value': 'key2', 'label': 'value2'}, {'value': 'key3', 'label': 'value3'}], 'test': [{'key2': 'value2'},{'key3': 'value3'}]}))).to.eventually.be.eql('<select name="test" id="test">\n    <option value="key1">value1</option><option value="key2" selected>value2</option><option value="key3" selected>value3</option>\n</select>')
+        })
+    })
+
 });

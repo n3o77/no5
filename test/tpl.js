@@ -14,6 +14,7 @@ templateDescriptor.registerVarTypeController('TestNumber', require('../VarTypeCo
 templateDescriptor.registerVarTypeController('Boolean', require('../VarTypeController/Boolean'))
 templateDescriptor.registerVarTypeController('Bool', require('../VarTypeController/Boolean'), {'true': 'yes', 'false': 'no'})
 templateDescriptor.registerVarTypeController('Wrong', require('./VarTypeController/Wrong'))
+templateDescriptor.registerVarTypeController('Options', require('../VarTypeController/form/Options'))
 
 templateDescriptor.registerViewController('Test', require('./viewController/Test'))
 templateDescriptor.registerViewController('Wrong', require('./viewController/Wrong'))

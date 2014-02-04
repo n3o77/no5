@@ -26,19 +26,22 @@ var VTDate = prime({
         'format': '%Y-%m-%d'
     },
 
-	constructor: function () {
+    constructor: function () {
         VTC.apply(this, arguments)
-	},
+    },
 
-	render: function() {
+    render: function() {
         var format = this.varTypeTag.format || this.options.format
         var value = object.get(this.item.values, this.varTypeTag.key)
 
         if (lang.isString(value)) value = new Date(mDate.parseIso(value))
-        if (!lang.isDate(value)) this.__log.error('Invalid Date: ' + value)
+        if (!lang.isDate(value)) {
+            this.__log.error('Invalid Date: ' + value)
+            return Promise.from('')
+        }
 
         return Promise.from(mDate.strftime(value, format))
-	}
+    }
 
 });
 

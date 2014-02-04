@@ -5,7 +5,7 @@ var path = require('path')
 var Promise = require('promise')
 var config = require('./config')
 var object = {
-	'mixIn': require('prime/object/mixIn')
+	'merge': require('mout/object/merge')
 }
 
 var TemplateLoader = prime({
@@ -19,15 +19,16 @@ var TemplateLoader = prime({
     cache: null,
 
 	constructor: function (conf) {
-		this.config = object.mixIn(config, conf)
+        this.config = object.merge(this.config, conf)
         this.cache = {}
 	},
 
 	loadTemplate: function(filePath) {
 		return new Promise(function(resolve, reject) {
-            var internalPath = __dirname + '/templates'
-			var fallBack = path.normalize(internalPath + '/' + filePath + '.' + config.tplSuffix)
-			filePath = path.normalize(config.templates + '/' + filePath + '.' + config.tplSuffix)
+            var internalPath = config.templates
+			var fallBack = path.normalize(internalPath + '/' + filePath + '.' + this.config.tplSuffix)
+			filePath = path.normalize(this.config.templates + '/' + filePath + '.' + this.config.tplSuffix)
+
 			if (!fs.existsSync(filePath) && fs.existsSync(fallBack)) filePath = fallBack
 
             if (this.config.cache && this.cache[filePath]) return resolve(this.cache[filePath])

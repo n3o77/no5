@@ -34,7 +34,7 @@ var Partial = prime({
 	render: function() {
         var value = object.get(this.item.values, this.varTypeTag.key);
         if (isItem(value)) return this.templateController.parse(value)
-        if (!value && lang.isString(this.varTypeTag.tpl || this.varTypeTag.template)) return this.templateController.parse(bItem(this.varTypeTag.tpl, lang.deepClone(this.item), 0, true))
+        if (!value && lang.isString(this.varTypeTag.tpl || this.varTypeTag.template)) return this.templateController.parse(bItem(this.varTypeTag.tpl, lang.deepClone(this.item.values), 0, true))
 
         return this.renderItems(value)
 	},

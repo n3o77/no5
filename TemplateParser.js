@@ -66,7 +66,7 @@ var TemplateParser = prime({
 
             var initVarType = function() {
                 if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from ViewController. Orig: ', origItem, ' New:', this.item)
-                var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key))
+                var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key || ''))
                 var VarTypeControllerObj = this.varTypeController[varType]
                 if (!VarTypeControllerObj) this.log.error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
@@ -176,7 +176,7 @@ var TemplateParser = prime({
             this.log.error('ERROR WITH VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
         }
 
-        if (!tplVar.key || string.trim(tplVar.key) === "") this.log.error('NO KEY SET IN VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+        if (!tplVar.key || string.trim(tplVar.key) === "") this.log.info('NO KEY SET IN VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
         return {'tplVar': tplVar, 'pos': pos, 'jsonVars': [jsonVar]}
     },

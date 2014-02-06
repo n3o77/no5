@@ -5,7 +5,9 @@ var VTC = require('../VarTypeController')
 var Promise = require('promise');
 var object = {
     'get': require('mout/object/get'),
-    'merge': require('mout/object/merge')
+    'merge': require('mout/object/merge'),
+    'filter': require('mout/object/filter'),
+    'keys': require('mout/object/keys')
 }
 
 var number = {
@@ -33,13 +35,10 @@ var Number = prime({
     render: function() {
         var value = object.get(this.item.values, this.varTypeTag.key)
 
-        var decimals = this.varTypeTag.decimals || this.options.decimals
-        var decimalPoint = this.varTypeTag.decPoint || this.options.decPoint
-        var thousandsSeperator = this.varTypeTag.thousandsSep || this.options.thousandsSep
-        var prefix = this.varTypeTag.prefix || this.options.prefix
-        var suffix = this.varTypeTag.suffix || this.options.suffix
-
-        var fNum = number.currencyFormat(value, decimals, decimalPoint, thousandsSeperator)
+        var opts = object.merge(this.options, object.filter(this.varTypeTag, function(val, key) {
+            return object.keys(this.options).indexOf(key) !== -1
+        }, this))
+        var fNum = number.currencyFormat(value, opts.decimals, opts.decPoint, opts.thousandsSep)
 
         if (this.varTypeTag.pad || this.options.pad) {
             var sNum = fNum.split(decimalPoint)
@@ -47,7 +46,7 @@ var Number = prime({
             fNum = sNum.join(decimalPoint)
         }
 
-        return Promise.from(prefix.toString() + fNum.toString() + suffix.toString());
+        return Promise.from(opts.prefix.toString() + fNum.toString() + opts.suffix.toString());
     }
 
 });

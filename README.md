@@ -334,7 +334,7 @@ no5.render(item('demo', {'test': [item('a', {'name': 'tpl a'}, 2), item('a', {'n
 
 Result:
 ```html
-<div><div>tpl a</div><div>tpl b</div></div>
+<div><div>tpl b</div><div>tpl a</div></div>
 ```
 
 You can also pass a shorthand object:

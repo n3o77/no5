@@ -17,11 +17,11 @@ var Boolean = prime({
         "false": "false"
     },
 
-	constructor: function () {
+    constructor: function () {
         VTC.apply(this, arguments)
-	},
+    },
 
-	render: function() {
+    render: function() {
         var t = this.varTypeTag['true'] || ""
         var f = this.varTypeTag['false'] || ""
 
@@ -31,7 +31,7 @@ var Boolean = prime({
         }
 
         return Promise.from(object.get(this.item.values, this.varTypeTag.key) !== false ? t : f)
-	}
+    }
 
 });
 

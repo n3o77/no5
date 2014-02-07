@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-	'templates': __dirname + '/templates'
+    'templates': __dirname + '/templates'
 }

@@ -12,7 +12,7 @@ var lang = {
     'deepClone': require('mout/lang/deepClone')
 }
 var array = {
-	'forEach': require('mout/array/forEach'),
+    'forEach': require('mout/array/forEach'),
     'every': require('mout/array/every')
 }
 var object = {
@@ -27,17 +27,17 @@ var Partial = prime({
 
     inherits: VTC,
 
-	constructor: function () {
+    constructor: function () {
         VTC.apply(this, arguments)
-	},
+    },
 
-	render: function() {
+    render: function() {
         var value = object.get(this.item.values, this.varTypeTag.key);
         if (isItem(value)) return this.templateController.parse(value)
         if (!value && lang.isString(this.varTypeTag.tpl || this.varTypeTag.template)) return this.templateController.parse(bItem(this.varTypeTag.tpl, lang.deepClone(this.item.values), 0, true))
 
         return this.renderItems(value)
-	},
+    },
 
     renderItems: function(items) {
         var ps = []

@@ -14,16 +14,16 @@ var Text = prime({
 
     inherits: VTC,
 
-	constructor: function () {
+    constructor: function () {
         VTC.apply(this, arguments)
-	},
+    },
 
-	render: function() {
+    render: function() {
         var value = object.get(this.item.values, this.varTypeTag.key)
         if (!lang.isString(value)) value = JSON.stringify(value)
 
         return Promise.from(value || '');
-	}
+    }
 
 });
 

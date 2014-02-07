@@ -10,20 +10,20 @@ var lang = {
 
 var TemplateController = prime({
 
-	'varTypeController': null,
-	'viewController': null,
+    'varTypeController': null,
+    'viewController': null,
     'session': null,
     'constants': null,
 
-	constructor: function (templateLoader, constants) {
+    constructor: function (templateLoader, constants) {
         /** @type {TemplateLoader} */
         this.templateLoader = templateLoader
         this.constants = constants
 
         this.varTypeController = {}
-		this.viewController = {}
+        this.viewController = {}
         this.log = new Log(this.constants.mode, this.constants.logger, this.constants.throwError)
-	},
+    },
 
     setSession: function(session) {
         this.session = session
@@ -37,20 +37,20 @@ var TemplateController = prime({
         return lang.deepClone(this.constants || {})
     },
 
-	registerVarTypeController: function(name, controller, options) {
-		this.varTypeController[name] = {'controller': controller, 'options': options}
-	},
+    registerVarTypeController: function(name, controller, options) {
+        this.varTypeController[name] = {'controller': controller, 'options': options}
+    },
 
-	registerViewController: function(name, controller, options) {
-		this.viewController[name] = {'controller': controller, 'options': options}
-	},
+    registerViewController: function(name, controller, options) {
+        this.viewController[name] = {'controller': controller, 'options': options}
+    },
 
-	getViewController: function(name) {
-		if (this.viewController[name]) return this.viewController[name]
-		return null
-	},
+    getViewController: function(name) {
+        if (this.viewController[name]) return this.viewController[name]
+        return null
+    },
 
-	parse: function(item) {
+    parse: function(item) {
         if (!item.template) this.log.error('No Template Given', item)
         if (!item.render) return Promise.from('')
 
@@ -58,11 +58,11 @@ var TemplateController = prime({
             var tplParser = this.getTemplateParser(item)
             return tplParser.parse(tpl)
         }.bind(this))
-	},
+    },
 
-	getTemplateParser: function(item) {
-		return new TemplateParser(this.varTypeController, this, item)
-	}
+    getTemplateParser: function(item) {
+        return new TemplateParser(this.varTypeController, this, item)
+    }
 
 });
 

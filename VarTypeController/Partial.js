@@ -54,7 +54,7 @@ var Partial = prime({
 
         array.forEach(items, function(item, idx) {
             if (lang.isObject(item) && !isItem(item)) item = this.castObjectToItem(item, idx)
-            if (lang.isString(item)) item = bItem(item, lang.deepClone(this.item), idx, true)
+            if (lang.isString(item)) item = bItem(item, null, idx, true)
             if (isItem(item)) return ps.push(this.templateController.parse(item))
             ps.push(Promise.from(item))
         }, this)
@@ -65,12 +65,9 @@ var Partial = prime({
     },
 
     castObjectToItem: function(obj, idx) {
-        var cast
-        object.forOwn(obj, function(value, key) {
-            cast = bItem(key, value, idx)
-        })
-
-        return cast
+        var tpl = this.varTypeTag.tpl || this.varTypeTag.template;
+        if (tpl) return bItem(tpl, obj, idx)
+        return obj
     }
 
 })

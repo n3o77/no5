@@ -103,7 +103,7 @@ describe('Template System', function() {
         it('should support multiple formats as items and sort them correctly', function() {
             var items = []
             items.push(template.item('vt_partial3_p1', {'test': ' ps3 '}, 3))
-            items.push({'vt_partial3_p2': {'test': ' op2 '}})
+            items.push({'test': ' op2 '})
             items.push('vt_partial3_p3')
             items.push(template.item('vt_partial3_p1', {'test': ' ps1 '}, 1))
             items.push(template.item('vt_partial3_p1', {'test': ' ps2 '}, 2))
@@ -152,7 +152,7 @@ describe('Template System', function() {
             return expect(template.render(template.item('vt_autocast', {'test': item}))).to.eventually.be.eql('<div>ap1b</div>')
         });
 
-        it('should autocast array with items to dynPartial', function() {
+        it('should autocast array with items to partial', function() {
             var items = []
             items.push(template.item('vt_partial3_p1', {'test': 'p1'}, 2))
             items.push(template.item('vt_partial3_p2', {'test': 'p2'}, 1))
@@ -160,9 +160,9 @@ describe('Template System', function() {
             return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
         });
 
-        it('should autocast array with objects with item value to dynPartial (key = template, value = values)', function() {
-            var items = [{'vt_partial3_p1': {'test': 'p1'}},{'vt_partial3_p2': {'test': 'p2'}}]
-            return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>ap1bcp2d</div>')
+        it('should autocast array with objects to partial and set the object as values when a tpl is set on the tplVar', function() {
+            var items = [{'test': 'p1'},{'test': 'p2'}]
+            return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>ap1bap2b</div>')
         });
 
         it('should autocast array to partial', function() {

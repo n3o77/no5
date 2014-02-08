@@ -327,21 +327,39 @@ a.html:
 ```
 
 ```js
-no5.render(item('demo', {'test': [item('a', {'name': 'tpl a'}, 2), item('a', {'name': 'tpl b', 1})]})).then(function(result) {
+no5.render(item('demo', {'test': [item('a', {'name': 'tpl a1'}, 2), item('a', {'name': 'tpl a2', 1})]})).then(function(result) {
     console.log(result)
 })
 ```
 
 Result:
 ```html
-<div><div>tpl b</div><div>tpl a</div></div>
+<div><div>tpl a2</div><div>tpl a1</div></div>
 ```
 
-You can also pass a shorthand object:
+If you set a template on the tplVart you can pass an array with objects which then are given as the values of the template:
+
+demo.html:
+```html
+<div>${'key': 'test', 'type': 'partial', 'template': 'a'}</div>
+```
+
+a.html:
+```html
+<div>${'key': 'name', 'type': 'text'}</div>
+```
 
 ```js
-[{'a': {'name': 'tpl a'}}, {'a': {'name': 'tpl b'}}]
+no5.render(item('demo', {'test': [{'name': 'hello'}, {'name': 'world'}]})).then(function(result) {
+    console.log(result)
+})
 ```
+
+Result:
+```html
+<div><div>hello</div><div>world</div></div>
+```
+
 ## Best Practices
 
 Create one file which defines everything you need and which you then use in your program.

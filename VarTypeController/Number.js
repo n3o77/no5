@@ -41,9 +41,9 @@ var Number = prime({
         var fNum = number.currencyFormat(value, opts.decimals, opts.decPoint, opts.thousandsSep)
 
         if (this.varTypeTag.pad || this.options.pad) {
-            var sNum = fNum.split(decimalPoint)
+            var sNum = fNum.split(opts.decPoint)
             sNum[0] = number.pad(sNum[0], this.varTypeTag.pad || this.options.pad, this.varTypeTag.padChar || this.options.padChar)
-            fNum = sNum.join(decimalPoint)
+            fNum = sNum.join(opts.decPoint)
         }
 
         return Promise.from(opts.prefix.toString() + fNum.toString() + opts.suffix.toString());

@@ -192,10 +192,6 @@ describe('Template System', function() {
         it('should throw an error that the parse method is missing in "Wrong" ViewController', function() {
             return expect(template.render(template.item('err_t4', {'test': 'foo'}))).to.eventually.be.rejectedWith('Parse method not implemented in ViewController: Wrong From:err_t4:1:8')
         })
-
-        it('should throw an error that no key is set in tplVar', function() {
-            return expect(template.render(template.item('err_t5', {'test': 'foo'}))).to.eventually.be.rejectedWith('NO KEY SET IN VARTYPE: {\'name\': \'test\'} in Template: err_t5:1:8')
-        })
     })
 
     describe('Basics', function() {

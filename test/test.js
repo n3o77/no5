@@ -202,6 +202,14 @@ describe('Template System', function() {
         it('should replace all same typeTags with the first result', function() {
             return expect(template.render(template.item('same_replace', {'test': 'abc'}))).to.eventually.be.eql('<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>')
         })
+
+        it('should be possible to use a short form of typeTags', function() {
+            return expect(template.render(template.item('vt_short', {'test': 'abc'}))).to.eventually.be.eql('<div>abc</div>')
+        })
+
+        it('should be possible to use a short form of typeTags with the type', function() {
+            return expect(template.render(template.item('vt_short2', {'test': '12'}))).to.eventually.be.eql('<div>12,000</div>')
+        })
     })
 
     describe('Form Helpers', function() {

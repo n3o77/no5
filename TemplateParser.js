@@ -170,10 +170,16 @@ var TemplateParser = prime({
 
     parseVar: function(jsonVar, pos) {
         var typeTag
-        try {
-            typeTag = JSON.parse(jsonVar.replace(/'/g, '"'))
-        } catch (e) {
-            this.log.error('ERROR WITH TYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
+        if (jsonVar.indexOf('{{') === 0) {
+            var s = jsonVar.substring(2, jsonVar.length -2).split(',')
+            typeTag = {'key': string.trim(s[0])}
+            if (s[1]) typeTag.type = string.trim(s[1])
+        } else {
+            try {
+                typeTag = JSON.parse(jsonVar.replace(/'/g, '"'))
+            } catch (e) {
+                this.log.error('ERROR WITH TYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
+            }
         }
 
         if (!typeTag.key || string.trim(typeTag.key) === "") this.log.info('NO KEY SET IN TYPETAG: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)

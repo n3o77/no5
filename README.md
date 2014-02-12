@@ -115,7 +115,7 @@ The first parameter defines the template filename you want to render.
 The second parameter expects an object with the values for the defined types in the template.
 You can pass multiple items to a partial Type. For that you can set a position (third parameter) and also if this item should be rendered (fourth paramert).
 
-## View Controller
+## DataController
 
 You can set to ever Type a dataController which handles action related to this. For example you can define a partial Type and decide in the DataController which partials should be rendered.
 You first have to register the dataController:

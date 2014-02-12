@@ -40,11 +40,30 @@ This will parse the helloWorld.html in the templates folder:
 <div>${"key": "test"}</div>
 ```
 
+with type:
+
+```html
+<div>${"key": "test", "type": "text"}</div>
+```
+
+Or a short version:
+
+```html
+<div>${{test}}</div>
+```
+
+Short with type
+
+```html
+<div>${{test,text}}</div>
+```
+
 Result:
 ```html
 <div>Hello World</div>
 ```
 
+The Short version only supports key and type, if you need further properties you have to fall back to the JSON format
 
 # API
 

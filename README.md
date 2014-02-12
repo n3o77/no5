@@ -112,7 +112,7 @@ var item = require('no5/item')
 item('template', {'key': 'value'}, position, render)
 ```
 The first parameter defines the template filename you want to render.
-The second parameter expects an object with the values for the defined varTypes in the template.
+The second parameter expects an object with the values for the defined types in the template.
 You can pass multiple items to a partial VarType. For that you can set a position (third parameter) and also if this item should be rendered (fourth paramert).
 
 ## View Controller

@@ -66,9 +66,9 @@ var TemplateParser = prime({
 
             var initVarType = function() {
                 if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
-                var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key || ''))
-                var TypeControllerObj = this.typeController[varType]
-                if (!TypeControllerObj) this.log.error('typeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+                var type = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key || ''))
+                var TypeControllerObj = this.typeController[type]
+                if (!TypeControllerObj) this.log.error('typeController "' + type + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
                 var options = object.map(TypeControllerObj.options, function(value) {
                     if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))

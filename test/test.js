@@ -177,7 +177,7 @@ describe('Template System', function() {
     })
 
     describe('Error Handling', function() {
-        it('should give the right position of the vartype in the template if varType is invalid', function() {
+        it('should give the right position of the typeTag in the template if type is invalid', function() {
             return expect(template.render(template.item('err_t1', {'test': 'foo'}))).to.eventually.be.rejectedWith('ERROR WITH VARTYPE: {\'key\': \'test2} in Template: err_t1:9:36')
         })
 

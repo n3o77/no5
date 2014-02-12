@@ -160,7 +160,7 @@ describe('Template System', function() {
             return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>cp2dap1b</div>')
         });
 
-        it('should autocast array with objects to partial and set the object as values when a tpl is set on the tplVar', function() {
+        it('should autocast array with objects to partial and set the object as values when a tpl is set on the typeTag', function() {
             var items = [{'test': 'p1'},{'test': 'p2'}]
             return expect(template.render(template.item('vt_autocast', {'test': items}))).to.eventually.be.eql('<div>ap1bap2b</div>')
         });
@@ -199,7 +199,7 @@ describe('Template System', function() {
             return expect(template.render(template.item('session_date', {'test': new Date(1970, 0, 2)}), {'formats': {'date': '%m.%d.%Y'}})).to.eventually.be.eql('<div>01.02.1970</div>')
         })
 
-        it('should replace all same tplVars with the first result', function() {
+        it('should replace all same typeTags with the first result', function() {
             return expect(template.render(template.item('same_replace', {'test': 'abc'}))).to.eventually.be.eql('<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>\n<div>abc</div>')
         })
     })

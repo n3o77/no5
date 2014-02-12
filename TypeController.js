@@ -13,7 +13,7 @@ var TypeController = prime({
     constructor: function (objVar, item, templateController, options) {
         this.options = object.merge(this.options, options)
         this.objVar = objVar
-        this.typeTag = objVar.tplVar
+        this.typeTag = objVar.typeTag
         this.item = item
         this.templateController = templateController
         this.__log = this.templateController.log

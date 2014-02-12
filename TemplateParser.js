@@ -57,11 +57,11 @@ var TemplateParser = prime({
         if (vars.length === 0) return this.complete()
         var ps = []
         for (var i = 0; i < vars.length; i++) {
-            var tplVar = vars[i];
-            tplVar.template = this.item.template
-            var jsonVars = tplVar.jsonVars
-            var objVar = tplVar.tplVar
-            var pos = tplVar.pos
+            var typeTag = vars[i];
+            typeTag.template = this.item.template
+            var jsonVars = typeTag.jsonVars
+            var objVar = typeTag.typeTag
+            var pos = typeTag.pos
             var origItem
 
             var initType = function() {
@@ -75,14 +75,14 @@ var TemplateParser = prime({
                     return value
                 }, this)
 
-                var typeController = new TypeControllerObj.controller(tplVar, this.item, this.templateController, options)
+                var typeController = new TypeControllerObj.controller(typeTag, this.item, this.templateController, options)
                 return typeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
             }.bind(this)
 
             var DataControllerObj = this.templateController.getDataController(objVar.vc || objVar.dataController)
             if (DataControllerObj) {
                 if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
-                var dataController = new DataControllerObj.controller(tplVar, this.item.values, this.templateController, DataControllerObj.options)
+                var dataController = new DataControllerObj.controller(typeTag, this.item.values, this.templateController, DataControllerObj.options)
                 ps.push(dataController.parse().then(initType))
             } else {
                 ps.push(initType())
@@ -105,7 +105,7 @@ var TemplateParser = prime({
     },
 
     updateTemplate: function(jsonVars, item, result) {
-        this.log.debug('Replacing tplVars (', jsonVars, ') with content:', result, 'item:', item)
+        this.log.debug('Replacing typeTags (', jsonVars, ') with content:', result, 'item:', item)
         array.forEach(jsonVars, function(jsonVar) {
             var regex = new RegExp("\\$"+this.escapeVar(jsonVar), 'g')
             this.tpl = this.tpl.replace(regex, result)
@@ -169,20 +169,20 @@ var TemplateParser = prime({
     },
 
     parseVar: function(jsonVar, pos) {
-        var tplVar
+        var typeTag
         try {
-            tplVar = JSON.parse(jsonVar.replace(/'/g, '"'))
+            typeTag = JSON.parse(jsonVar.replace(/'/g, '"'))
         } catch (e) {
             this.log.error('ERROR WITH TYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
         }
 
-        if (!tplVar.key || string.trim(tplVar.key) === "") this.log.info('NO KEY SET IN TYPETAG: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+        if (!typeTag.key || string.trim(typeTag.key) === "") this.log.info('NO KEY SET IN TYPETAG: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
-        return {'tplVar': tplVar, 'pos': pos, 'jsonVars': [jsonVar]}
+        return {'typeTag': typeTag, 'pos': pos, 'jsonVars': [jsonVar]}
     },
 
     addVarToResults: function(parsed, result) {
-        var vt = array.find(result, {'tplVar': parsed.tplVar});
+        var vt = array.find(result, {'typeTag': parsed.typeTag});
         if (!vt) return result.push(parsed)
         if (!array.find(vt.jsonVars, {'jsonVars': parsed.jsonVars[0]})) vt.jsonVars.push(parsed.jsonVars[0])
     },

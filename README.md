@@ -337,7 +337,7 @@ Result:
 <div><div>tpl a2</div><div>tpl a1</div></div>
 ```
 
-If you set a template on the tplVart you can pass an array with objects which then are given as the values of the template:
+If you set a template on the typeTag you can pass an array with objects which then are given as the values of the template:
 
 demo.html:
 ```html

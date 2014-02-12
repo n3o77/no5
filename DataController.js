@@ -10,7 +10,7 @@ var DataController = prime({
     constructor: function (objVar, values, templateController, options) {
         this.options = object.merge(this.options, options)
         this.objVar = objVar
-        this.typeTag = objVar.tplVar
+        this.typeTag = objVar.typeTag
         this.values = values
         this.templateController = templateController
         this.__log = this.templateController.log

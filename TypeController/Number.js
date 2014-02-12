@@ -33,16 +33,16 @@ var Number = prime({
     },
 
     render: function() {
-        var value = object.get(this.item.values, this.varTypeTag.key)
+        var value = object.get(this.item.values, this.typeTag.key)
 
-        var opts = object.merge(this.options, object.filter(this.varTypeTag, function(val, key) {
+        var opts = object.merge(this.options, object.filter(this.typeTag, function(val, key) {
             return object.keys(this.options).indexOf(key) !== -1
         }, this))
         var fNum = number.currencyFormat(value, opts.decimals, opts.decPoint, opts.thousandsSep)
 
-        if (this.varTypeTag.pad || this.options.pad) {
+        if (this.typeTag.pad || this.options.pad) {
             var sNum = fNum.split(opts.decPoint)
-            sNum[0] = number.pad(sNum[0], this.varTypeTag.pad || this.options.pad, this.varTypeTag.padChar || this.options.padChar)
+            sNum[0] = number.pad(sNum[0], this.typeTag.pad || this.options.pad, this.typeTag.padChar || this.options.padChar)
             fNum = sNum.join(opts.decPoint)
         }
 

@@ -32,9 +32,9 @@ var Partial = prime({
     },
 
     render: function() {
-        var value = object.get(this.item.values, this.varTypeTag.key);
+        var value = object.get(this.item.values, this.typeTag.key);
         if (isItem(value)) return this.templateController.parse(value)
-        if (!value && lang.isString(this.varTypeTag.tpl || this.varTypeTag.template)) return this.templateController.parse(bItem(this.varTypeTag.tpl, lang.deepClone(this.item.values), 0, true))
+        if (!value && lang.isString(this.typeTag.tpl || this.typeTag.template)) return this.templateController.parse(bItem(this.typeTag.tpl, lang.deepClone(this.item.values), 0, true))
 
         return this.renderItems(value)
     },
@@ -65,7 +65,7 @@ var Partial = prime({
     },
 
     castObjectToItem: function(obj, idx) {
-        var tpl = this.varTypeTag.tpl || this.varTypeTag.template;
+        var tpl = this.typeTag.tpl || this.typeTag.template;
         if (tpl) return bItem(tpl, obj, idx)
         return obj
     }

@@ -31,8 +31,8 @@ var VTDate = prime({
     },
 
     render: function() {
-        var format = this.varTypeTag.format || this.options.format
-        var value = object.get(this.item.values, this.varTypeTag.key)
+        var format = this.typeTag.format || this.options.format
+        var value = object.get(this.item.values, this.typeTag.key)
 
         if (lang.isString(value)) value = new Date(mDate.parseIso(value))
         if (!lang.isDate(value)) {

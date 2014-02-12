@@ -19,7 +19,7 @@ var Text = prime({
     },
 
     render: function() {
-        var value = object.get(this.item.values, this.varTypeTag.key)
+        var value = object.get(this.item.values, this.typeTag.key)
         if (!lang.isString(value)) value = JSON.stringify(value)
 
         return Promise.from(value || '');

@@ -22,15 +22,15 @@ var Boolean = prime({
     },
 
     render: function() {
-        var t = this.varTypeTag['true'] || ""
-        var f = this.varTypeTag['false'] || ""
+        var t = this.typeTag['true'] || ""
+        var f = this.typeTag['false'] || ""
 
-        if (!this.varTypeTag['true'] && ! this.varTypeTag['false']) {
+        if (!this.typeTag['true'] && ! this.typeTag['false']) {
             t = this.options['true']
             f = this.options['false']
         }
 
-        return Promise.from(object.get(this.item.values, this.varTypeTag.key) !== false ? t : f)
+        return Promise.from(object.get(this.item.values, this.typeTag.key) !== false ? t : f)
     }
 
 });

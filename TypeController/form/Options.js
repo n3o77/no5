@@ -35,7 +35,7 @@ var Options = prime({
     },
 
     render: function() {
-        var optionsSource = object.get(this.item.values, this.varTypeTag.options)
+        var optionsSource = object.get(this.item.values, this.typeTag.options)
         var options
 
         if (lang.isArray(optionsSource)) {
@@ -59,11 +59,11 @@ var Options = prime({
 
     buildOptions: function(options) {
         if (!options) return []
-        var currentlySelected = object.get(this.item.values, this.varTypeTag.key)
-        var tpl = this.varTypeTag.tpl ? object.get(this.item.values, this.varTypeTag.tpl) : 'form/option'
+        var currentlySelected = object.get(this.item.values, this.typeTag.key)
+        var tpl = this.typeTag.tpl ? object.get(this.item.values, this.typeTag.tpl) : 'form/option'
 
         return array.map(options, function(option, index) {
-            option.selected = this.isValueOf(currentlySelected, this.varTypeTag.value, option.value) || option.value === currentlySelected
+            option.selected = this.isValueOf(currentlySelected, this.typeTag.value, option.value) || option.value === currentlySelected
             return tplItem(tpl, option, index+1)
         }, this)
     },

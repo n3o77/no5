@@ -13,14 +13,14 @@ var TypeController = prime({
     constructor: function (objVar, item, templateController, options) {
         this.options = object.merge(this.options, options)
         this.objVar = objVar
-        this.varTypeTag = objVar.tplVar
+        this.typeTag = objVar.tplVar
         this.item = item
         this.templateController = templateController
         this.__log = this.templateController.log
     },
 
     render: function() {
-        this.__log.error('Render method not implemented in VarTypeConrtoller: ' + this.varTypeTag.type + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
+        this.__log.error('Render method not implemented in VarTypeConrtoller: ' + this.typeTag.type + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
     }
 
 })

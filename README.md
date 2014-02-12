@@ -127,7 +127,7 @@ var templateLoader = new TemplateLoader({'templates': __dirname + '/templates'})
 var no5 = new No5(templateLoader, {'throwError': true, 'mode': No5.ENUM_MODE.PRODUCTION})
 
 no5.registerTypeController('Text', require('../TypeController/Text'))
-//... register more varTypeController
+//... register more typeController
 
 no5.registerDataController('Test', require('./dataController/Test'))
 //... register more dataController
@@ -174,8 +174,8 @@ Template:
 TypeController is a little helper which helps you to build your template and format values easily and consistently.
 You can register the same TypeController with differnt defaults which makes them very powerful.
 
-No5 also supports an autocasting of types, so if you don't specify a type in the templateVar ( `${'key': 'test'} ) it looks at the given value and decides which varTypeController to use.
-It does this by getting the kind of the value and looks if a varTypeController with this type is defined. ( http://moutjs.com/docs/v0.8.0/lang.html#kindOf )
+No5 also supports an autocasting of types, so if you don't specify a type in the templateVar ( `${'key': 'test'} ) it looks at the given value and decides which typeController to use.
+It does this by getting the kind of the value and looks if a typeController with this type is defined. ( http://moutjs.com/docs/v0.8.0/lang.html#kindOf )
 
 Example:
 ```js
@@ -208,7 +208,7 @@ no5.render(item('demo', {'test': 12.34})).then(function(result) {
 
 ### Boolean
 
-Very simple varTypeController for returning single words:
+Very simple typeController for returning single words:
 demo.html:
 ```html
 <div>${'key': 'test', 'type': 'boolean', 'true': 'Hello', 'false': 'world'}</div>

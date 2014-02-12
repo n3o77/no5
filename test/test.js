@@ -182,7 +182,7 @@ describe('Template System', function() {
         })
 
         it('should give the right position of the vartype in the template if type doesn\'t exist', function() {
-            return expect(template.render(template.item('err_t2', {'test': 'foo'}))).to.eventually.be.rejectedWith('varTypeController "Foo" not available. From: err_t2:14:13')
+            return expect(template.render(template.item('err_t2', {'test': 'foo'}))).to.eventually.be.rejectedWith('typeController "Foo" not available. From: err_t2:14:13')
         })
 
         it('should throw an error that the render method is missing in "Wrong" TypeController', function() {

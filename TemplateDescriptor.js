@@ -20,7 +20,7 @@ var TemplateDescriptor = prime({
 
     'ENUM_MODE': ENUM_MODE,
 
-    'varTypeController': null,
+    'typeController': null,
     'dataController': null,
 
     constructor: function (templateLoader, constants) {
@@ -28,12 +28,12 @@ var TemplateDescriptor = prime({
 
         this.templateLoader = templateLoader
 
-        this.varTypeController = {}
+        this.typeController = {}
         this.dataController = {}
     },
 
     registerTypeController: function(name, controller, options) {
-        this.varTypeController[name] = {'controller': controller, 'options': options}
+        this.typeController[name] = {'controller': controller, 'options': options}
     },
 
     registerDataController: function(name, controller, options) {
@@ -48,7 +48,7 @@ var TemplateDescriptor = prime({
     getTemplateController: function() {
         var tplController = new TemplateController(this.templateLoader, this.constants)
 
-        object.forOwn(this.varTypeController, function(item, name) {
+        object.forOwn(this.typeController, function(item, name) {
             tplController.registerTypeController(name, item.controller, item.options)
         })
 

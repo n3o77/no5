@@ -31,10 +31,10 @@ var string = {
 
 var TemplateParser = prime({
 
-    varTypeController: null,
+    typeController: null,
 
-    constructor: function (varTypeController, templateController, item) {
-        this.varTypeController = varTypeController
+    constructor: function (typeController, templateController, item) {
+        this.typeController = typeController
         this.templateController = templateController
         this.item = item
         this.log = templateController.log
@@ -67,16 +67,16 @@ var TemplateParser = prime({
             var initVarType = function() {
                 if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
                 var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key || ''))
-                var TypeControllerObj = this.varTypeController[varType]
-                if (!TypeControllerObj) this.log.error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+                var TypeControllerObj = this.typeController[varType]
+                if (!TypeControllerObj) this.log.error('typeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
                 var options = object.map(TypeControllerObj.options, function(value) {
                     if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
                     return value
                 }, this)
 
-                var varTypeController = new TypeControllerObj.controller(tplVar, this.item, this.templateController, options)
-                return varTypeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
+                var typeController = new TypeControllerObj.controller(tplVar, this.item, this.templateController, options)
+                return typeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
             }.bind(this)
 
             var DataControllerObj = this.templateController.getDataController(objVar.vc || objVar.dataController)
@@ -141,7 +141,7 @@ var TemplateParser = prime({
                 return 'Text'
         }
 
-        if (!this.varTypeController[result]) {
+        if (!this.typeController[result]) {
             this.log.debug('Autocasting Value Type:', kind, ' Autocast to:', result, 'Value:', value)
             return 'Text'
         }

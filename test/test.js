@@ -10,7 +10,7 @@ var template = require('./tpl')
 
 describe('Template System', function() {
 
-    describe('VarType Text', function() {
+    describe('Type Text', function() {
         it('should replace text with given parameters', function() {
             return expect(template.render(template.item('vt_text', {'test': 'foo'}))).to.eventually.be.eql('<div>foo</div>')
         })
@@ -20,7 +20,7 @@ describe('Template System', function() {
         })
     })
 
-    describe('VarType Date', function() {
+    describe('Type Date', function() {
         it('should replace date tag', function() {
             return expect(template.render(template.item('vt_date1', {'test': new Date(1970, 0, 2)}))).to.eventually.be.eql('<div>1970-01-02</div>')
         })
@@ -38,7 +38,7 @@ describe('Template System', function() {
         })
     })
 
-    describe('VarType Number', function() {
+    describe('Type Number', function() {
         it('should replace number tag and round up', function() {
             return expect(template.render(template.item('vt_number1', {'test': 1.55}))).to.eventually.be.eql('<div>2</div>')
         })
@@ -64,7 +64,7 @@ describe('Template System', function() {
         })
     })
 
-    describe('VarType Partial', function() {
+    describe('Type Partial', function() {
         it('should replace partial tag with given template', function() {
             return expect(template.render(template.item('vt_partial1'))).to.eventually.be.eql('<div>ab</div>')
         })
@@ -112,7 +112,7 @@ describe('Template System', function() {
         })
     })
 
-    describe('VarType Boolean', function() {
+    describe('Type Boolean', function() {
         it('should replace boolean tag with custom true', function() {
             return expect(template.render(template.item('vt_boolean1', {'test': true}))).to.eventually.be.eql('<div>yes</div>')
         })
@@ -130,7 +130,7 @@ describe('Template System', function() {
         })
     })
 
-    describe('Auto Casting for VarTypes', function() {
+    describe('Auto Casting for Types', function() {
         it('should autocast boolean to boolean', function() {
             return expect(template.render(template.item('vt_autocast', {'test': true}))).to.eventually.be.eql('<div>true</div>')
         });
@@ -178,15 +178,15 @@ describe('Template System', function() {
 
     describe('Error Handling', function() {
         it('should give the right position of the typeTag in the template if type is invalid', function() {
-            return expect(template.render(template.item('err_t1', {'test': 'foo'}))).to.eventually.be.rejectedWith('ERROR WITH VARTYPE: {\'key\': \'test2} in Template: err_t1:9:36')
+            return expect(template.render(template.item('err_t1', {'test': 'foo'}))).to.eventually.be.rejectedWith('ERROR WITH TYPE: {\'key\': \'test2} in Template: err_t1:9:36')
         })
 
-        it('should give the right position of the vartype in the template if type doesn\'t exist', function() {
+        it('should give the right position of the Type in the template if type doesn\'t exist', function() {
             return expect(template.render(template.item('err_t2', {'test': 'foo'}))).to.eventually.be.rejectedWith('typeController "Foo" not available. From: err_t2:14:13')
         })
 
         it('should throw an error that the render method is missing in "Wrong" TypeController', function() {
-            return expect(template.render(template.item('err_t3', {'test': 'foo'}))).to.eventually.be.rejectedWith('Render method not implemented in VarTypeConrtoller: Wrong From:err_t3:1:8')
+            return expect(template.render(template.item('err_t3', {'test': 'foo'}))).to.eventually.be.rejectedWith('Render method not implemented in TypeConrtoller: Wrong From:err_t3:1:8')
         })
 
         it('should throw an error that the parse method is missing in "Wrong" DataController', function() {

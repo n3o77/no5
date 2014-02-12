@@ -7,8 +7,8 @@ The name "No5" is a hommage to Johnny Number 5 from the 1986 Movie "Short Circui
 
 ## Intro
 
-I introduced something I call "VarTypes" which are placeholders in the templates with different purposes and default logic.
-You can learn more about VarTypes and their properties on the bottom of the page.
+I introduced something I call "Types" which are placeholders in the templates with different purposes and default logic.
+You can learn more about Types and their properties on the bottom of the page.
 
 ## Quick Start
 
@@ -113,11 +113,11 @@ item('template', {'key': 'value'}, position, render)
 ```
 The first parameter defines the template filename you want to render.
 The second parameter expects an object with the values for the defined types in the template.
-You can pass multiple items to a partial VarType. For that you can set a position (third parameter) and also if this item should be rendered (fourth paramert).
+You can pass multiple items to a partial Type. For that you can set a position (third parameter) and also if this item should be rendered (fourth paramert).
 
 ## View Controller
 
-You can set to ever VarType a dataController which handles action related to this. For example you can define a partial VarType and decide in the DataController which partials should be rendered.
+You can set to ever Type a dataController which handles action related to this. For example you can define a partial Type and decide in the DataController which partials should be rendered.
 You first have to register the dataController:
 ```js
 var No5 = require('no5')
@@ -314,7 +314,7 @@ Defaults:
 
 ### Partial
 
-Partial is propably the most powerful VarType. You can dynamically load multiple templates, sort them, hide them etc.
+Partial is propably the most powerful Type. You can dynamically load multiple templates, sort them, hide them etc.
 
 demo.html:
 ```html

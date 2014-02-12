@@ -64,9 +64,9 @@ var TemplateParser = prime({
             var pos = tplVar.pos
             var origItem
 
-            var initVarType = function() {
+            var initType = function() {
                 if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
-                var type = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key || ''))
+                var type = objVar.type = this.getType(objVar.type, object.get(this.item.values, objVar.key || ''))
                 var TypeControllerObj = this.typeController[type]
                 if (!TypeControllerObj) this.log.error('typeController "' + type + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
@@ -83,9 +83,9 @@ var TemplateParser = prime({
             if (DataControllerObj) {
                 if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
                 var dataController = new DataControllerObj.controller(tplVar, this.item.values, this.templateController, DataControllerObj.options)
-                ps.push(dataController.parse().then(initVarType))
+                ps.push(dataController.parse().then(initType))
             } else {
-                ps.push(initVarType())
+                ps.push(initType())
             }
         }
 
@@ -116,7 +116,7 @@ var TemplateParser = prime({
         return jvar.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     },
 
-    getVarType: function(type, value) {
+    getType: function(type, value) {
         if (type) return this.capitaliseFirstLetter(type)
         var result = 'Text'
         var kind = lang.kindOf(value);
@@ -173,10 +173,10 @@ var TemplateParser = prime({
         try {
             tplVar = JSON.parse(jsonVar.replace(/'/g, '"'))
         } catch (e) {
-            this.log.error('ERROR WITH VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
+            this.log.error('ERROR WITH TYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col);
         }
 
-        if (!tplVar.key || string.trim(tplVar.key) === "") this.log.info('NO KEY SET IN VARTYPE: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+        if (!tplVar.key || string.trim(tplVar.key) === "") this.log.info('NO KEY SET IN TYPETAG: ' + jsonVar + ' in Template: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
         return {'tplVar': tplVar, 'pos': pos, 'jsonVars': [jsonVar]}
     },

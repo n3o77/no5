@@ -30,7 +30,7 @@ var item = require('no5/item')
 var templateLoader = new TemplateLoader({'templates': __dirname + '/templates'})
 var no5 = new No5(templateLoader, {'throwError': true, 'mode': No5.ENUM_MODE.PRODUCTION})
 
-no5.registerVarTypeController('Text', require('../VarTypeController/Text'))
+no5.registerTypeController('Text', require('../TypeController/Text'))
 
 no5.parse(item('helloWorld', {'test': 'Hello World'}), {'my': ['session', 'object']});
 ```
@@ -66,7 +66,7 @@ var constants = {
     'logger': console.log
 }
 ```
-no5.registerVarTypeController(String Name, VarTypeController Class)
+no5.registerTypeController(String Name, TypeController Class)
 no5.registerDataController(String Name, DataController Class)
 
 #### Modes
@@ -126,7 +126,7 @@ var item = require('no5/item')
 var templateLoader = new TemplateLoader({'templates': __dirname + '/templates'})
 var no5 = new No5(templateLoader, {'throwError': true, 'mode': No5.ENUM_MODE.PRODUCTION})
 
-no5.registerVarTypeController('Text', require('../VarTypeController/Text'))
+no5.registerTypeController('Text', require('../TypeController/Text'))
 //... register more varTypeController
 
 no5.registerDataController('Test', require('./dataController/Test'))
@@ -169,10 +169,10 @@ Template:
 <div>${'type': 'partial', 'key': 'test', 'dataController': 'Test'}</div>
 ```
 
-## VarTypeController
+## TypeController
 
-VarTypeController is a little helper which helps you to build your template and format values easily and consistently.
-You can register the same VarTypeController with differnt defaults which makes them very powerful.
+TypeController is a little helper which helps you to build your template and format values easily and consistently.
+You can register the same TypeController with differnt defaults which makes them very powerful.
 
 No5 also supports an autocasting of types, so if you don't specify a type in the templateVar ( `${'key': 'test'} ) it looks at the given value and decides which varTypeController to use.
 It does this by getting the kind of the value and looks if a varTypeController with this type is defined. ( http://moutjs.com/docs/v0.8.0/lang.html#kindOf )
@@ -181,9 +181,9 @@ Example:
 ```js
 ...
 
-no5.registerVarTypeController('Number', require('../VarTypeController/Number'))
-no5.registerVarTypeController('Price', require('../VarTypeController/Number'), {'decimals': 2, 'decPoint': ',', 'thousandsSep': '.', 'suffix': '$'})
-no5.registerVarTypeController('Percent', require('../VarTypeController/Number'), {'decimals': 0, 'suffix': '%'})
+no5.registerTypeController('Number', require('../TypeController/Number'))
+no5.registerTypeController('Price', require('../TypeController/Number'), {'decimals': 2, 'decPoint': ',', 'thousandsSep': '.', 'suffix': '$'})
+no5.registerTypeController('Percent', require('../TypeController/Number'), {'decimals': 0, 'suffix': '%'})
 
 ...
 ```
@@ -371,17 +371,17 @@ var TemplateLoader = require('no5/TemplateLoader')
 var templateLoader = new TemplateLoader({'templates': __dirname + '/templates'})
 var no5 = new No5(templateLoader, {'throwError': true, 'mode': TemplateDescriptor.ENUM_MODE.PRODUCTION})
 
-no5.registerVarTypeController('Partial', require('../VarTypeController/Partial'))
-no5.registerVarTypeController('Text', require('../VarTypeController/Text'))
-no5.registerVarTypeController('Date', require('../VarTypeController/Date'))
-no5.registerVarTypeController('TestDate', require('../VarTypeController/Date'), {'format': '%m.%d.%Y'})
-no5.registerVarTypeController('SessionDate', require('../VarTypeController/Date'), {'format': '__session.formats.date'})
-no5.registerVarTypeController('Number', require('../VarTypeController/Number'))
-no5.registerVarTypeController('TestNumber', require('../VarTypeController/Number'), {'decimals': 3, 'decPoint': ',', 'thousandsSep': '.'})
-no5.registerVarTypeController('Select', require('../VarTypeController/form/Select'))
-no5.registerVarTypeController('Boolean', require('../VarTypeController/Boolean'), {'true': 'yes', 'false': 'no'})
-no5.registerVarTypeController('Bool', require('../VarTypeController/Boolean'))
-no5.registerVarTypeController('Wrong', require('./VarTypeController/Wrong'))
+no5.registerTypeController('Partial', require('../TypeController/Partial'))
+no5.registerTypeController('Text', require('../TypeController/Text'))
+no5.registerTypeController('Date', require('../TypeController/Date'))
+no5.registerTypeController('TestDate', require('../TypeController/Date'), {'format': '%m.%d.%Y'})
+no5.registerTypeController('SessionDate', require('../TypeController/Date'), {'format': '__session.formats.date'})
+no5.registerTypeController('Number', require('../TypeController/Number'))
+no5.registerTypeController('TestNumber', require('../TypeController/Number'), {'decimals': 3, 'decPoint': ',', 'thousandsSep': '.'})
+no5.registerTypeController('Select', require('../TypeController/form/Select'))
+no5.registerTypeController('Boolean', require('../TypeController/Boolean'), {'true': 'yes', 'false': 'no'})
+no5.registerTypeController('Bool', require('../TypeController/Boolean'))
+no5.registerTypeController('Wrong', require('./TypeController/Wrong'))
 
 no5.registerDataController('Test', require('./dataController/Test'))
 no5.registerDataController('Wrong', require('./dataController/Wrong'))

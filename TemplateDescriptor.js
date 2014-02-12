@@ -32,7 +32,7 @@ var TemplateDescriptor = prime({
         this.dataController = {}
     },
 
-    registerVarTypeController: function(name, controller, options) {
+    registerTypeController: function(name, controller, options) {
         this.varTypeController[name] = {'controller': controller, 'options': options}
     },
 
@@ -49,7 +49,7 @@ var TemplateDescriptor = prime({
         var tplController = new TemplateController(this.templateLoader, this.constants)
 
         object.forOwn(this.varTypeController, function(item, name) {
-            tplController.registerVarTypeController(name, item.controller, item.options)
+            tplController.registerTypeController(name, item.controller, item.options)
         })
 
         object.forOwn(this.dataController, function(item, name) {

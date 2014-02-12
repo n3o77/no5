@@ -6,7 +6,7 @@ var object = {
 };
 
 
-var VarTypeController = prime({
+var TypeController = prime({
 
     options: {},
 
@@ -25,4 +25,4 @@ var VarTypeController = prime({
 
 })
 
-module.exports = VarTypeController
+module.exports = TypeController

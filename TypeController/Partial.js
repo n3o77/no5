@@ -1,7 +1,7 @@
 'use strict';
 
 var prime = require('prime')
-var VTC = require('../VarTypeController')
+var VTC = require('../TypeController')
 var bItem = require('../item')
 var isItem = require('../util/isItem')
 var lang = {

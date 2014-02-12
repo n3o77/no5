@@ -1,7 +1,7 @@
 'use strict';
 
 var prime = require('prime');
-var VTC = require('../VarTypeController')
+var VTC = require('../TypeController')
 var Promise = require('promise');
 var object = {
     'get': require('mout/object/get'),

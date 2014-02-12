@@ -37,7 +37,7 @@ var TemplateController = prime({
         return lang.deepClone(this.constants || {})
     },
 
-    registerVarTypeController: function(name, controller, options) {
+    registerTypeController: function(name, controller, options) {
         this.varTypeController[name] = {'controller': controller, 'options': options}
     },
 

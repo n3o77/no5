@@ -67,15 +67,15 @@ var TemplateParser = prime({
             var initVarType = function() {
                 if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
                 var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key || ''))
-                var VarTypeControllerObj = this.varTypeController[varType]
-                if (!VarTypeControllerObj) this.log.error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+                var TypeControllerObj = this.varTypeController[varType]
+                if (!TypeControllerObj) this.log.error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
-                var options = object.map(VarTypeControllerObj.options, function(value) {
+                var options = object.map(TypeControllerObj.options, function(value) {
                     if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
                     return value
                 }, this)
 
-                var varTypeController = new VarTypeControllerObj.controller(tplVar, this.item, this.templateController, options)
+                var varTypeController = new TypeControllerObj.controller(tplVar, this.item, this.templateController, options)
                 return varTypeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
             }.bind(this)
 

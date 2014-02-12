@@ -5,7 +5,7 @@ var object = {
     'merge': require('mout/object/merge')
 };
 
-var ViewController = prime({
+var DataController = prime({
 
     constructor: function (objVar, values, templateController, options) {
         this.options = object.merge(this.options, options)
@@ -17,9 +17,9 @@ var ViewController = prime({
     },
 
     parse: function() {
-        this.__log.error('Parse method not implemented in ViewController: ' + (this.varTypeTag.vc || this.varTypeTag.viewController) + ' From:' + this.objVar.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
+        this.__log.error('Parse method not implemented in DataController: ' + (this.varTypeTag.vc || this.varTypeTag.dataController) + ' From:' + this.objVar.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
     }
 
 })
 
-module.exports = ViewController
+module.exports = DataController

@@ -1,7 +1,7 @@
 'use strict';
 
 var prime = require('prime')
-var VC = require('../../ViewController')
+var VC = require('../../DataController')
 
 var Wrong = prime({
 

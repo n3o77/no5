@@ -67,7 +67,7 @@ var constants = {
 }
 ```
 no5.registerVarTypeController(String Name, VarTypeController Class)
-no5.registerViewController(String Name, ViewController Class)
+no5.registerDataController(String Name, DataController Class)
 
 #### Modes
 
@@ -76,7 +76,7 @@ Doesn't log anything.
 
 Develop:
 Logs basic information which are helpful to develop.
-Adds a comment before and after each template with the template and viewController
+Adds a comment before and after each template with the template and dataController
 
 Debug:
 Logs everthing from `develop` and adds additional more internal stuff which helps you follow what exactly happens.
@@ -117,8 +117,8 @@ You can pass multiple items to a partial VarType. For that you can set a positio
 
 ## View Controller
 
-You can set to ever VarType a viewController which handles action related to this. For example you can define a partial VarType and decide in the ViewController which partials should be rendered.
-You first have to register the viewController:
+You can set to ever VarType a dataController which handles action related to this. For example you can define a partial VarType and decide in the DataController which partials should be rendered.
+You first have to register the dataController:
 ```js
 var No5 = require('no5')
 var TemplateLoader = require('no5/TemplateLoader')
@@ -129,19 +129,19 @@ var no5 = new No5(templateLoader, {'throwError': true, 'mode': No5.ENUM_MODE.PRO
 no5.registerVarTypeController('Text', require('../VarTypeController/Text'))
 //... register more varTypeController
 
-no5.registerViewController('Test', require('./viewController/Test'))
-//... register more viewController
+no5.registerDataController('Test', require('./dataController/Test'))
+//... register more dataController
 
 no5.parse(item('helloWorld', {'test': 'Hello World'}), {'my': ['session', 'object']});
 
 ```
 
-ViewController (./viewController/Test.js):
+DataController (./dataController/Test.js):
 ```js
 'use strict';
 
 var prime = require('prime')
-var VC = require('no5/ViewController')
+var VC = require('no5/DataController')
 var Promise = require('promise')
 
 var Test = prime({
@@ -166,7 +166,7 @@ module.exports = Test
 
 Template:
 ```html
-<div>${'type': 'partial', 'key': 'test', 'viewController': 'Test'}</div>
+<div>${'type': 'partial', 'key': 'test', 'dataController': 'Test'}</div>
 ```
 
 ## VarTypeController
@@ -383,8 +383,8 @@ no5.registerVarTypeController('Boolean', require('../VarTypeController/Boolean')
 no5.registerVarTypeController('Bool', require('../VarTypeController/Boolean'))
 no5.registerVarTypeController('Wrong', require('./VarTypeController/Wrong'))
 
-no5.registerViewController('Test', require('./viewController/Test'))
-no5.registerViewController('Wrong', require('./viewController/Wrong'))
+no5.registerDataController('Test', require('./dataController/Test'))
+no5.registerDataController('Wrong', require('./dataController/Wrong'))
 
 module.exports = {
     'item': require('../item'),

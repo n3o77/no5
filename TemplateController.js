@@ -11,7 +11,7 @@ var lang = {
 var TemplateController = prime({
 
     'varTypeController': null,
-    'viewController': null,
+    'dataController': null,
     'session': null,
     'constants': null,
 
@@ -21,7 +21,7 @@ var TemplateController = prime({
         this.constants = constants
 
         this.varTypeController = {}
-        this.viewController = {}
+        this.dataController = {}
         this.log = new Log(this.constants.mode, this.constants.logger, this.constants.throwError)
     },
 
@@ -41,12 +41,12 @@ var TemplateController = prime({
         this.varTypeController[name] = {'controller': controller, 'options': options}
     },
 
-    registerViewController: function(name, controller, options) {
-        this.viewController[name] = {'controller': controller, 'options': options}
+    registerDataController: function(name, controller, options) {
+        this.dataController[name] = {'controller': controller, 'options': options}
     },
 
-    getViewController: function(name) {
-        if (this.viewController[name]) return this.viewController[name]
+    getDataController: function(name) {
+        if (this.dataController[name]) return this.dataController[name]
         return null
     },
 

@@ -65,7 +65,7 @@ var TemplateParser = prime({
             var origItem
 
             var initVarType = function() {
-                if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from ViewController. Orig: ', origItem, ' New:', this.item)
+                if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
                 var varType = objVar.type = this.getVarType(objVar.type, object.get(this.item.values, objVar.key || ''))
                 var VarTypeControllerObj = this.varTypeController[varType]
                 if (!VarTypeControllerObj) this.log.error('varTypeController "' + varType + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
@@ -79,11 +79,11 @@ var TemplateParser = prime({
                 return varTypeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
             }.bind(this)
 
-            var ViewControllerObj = this.templateController.getViewController(objVar.vc || objVar.viewController)
-            if (ViewControllerObj) {
+            var DataControllerObj = this.templateController.getDataController(objVar.vc || objVar.dataController)
+            if (DataControllerObj) {
                 if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
-                var viewController = new ViewControllerObj.controller(tplVar, this.item.values, this.templateController, ViewControllerObj.options)
-                ps.push(viewController.parse().then(initVarType))
+                var dataController = new DataControllerObj.controller(tplVar, this.item.values, this.templateController, DataControllerObj.options)
+                ps.push(dataController.parse().then(initVarType))
             } else {
                 ps.push(initVarType())
             }
@@ -96,7 +96,7 @@ var TemplateParser = prime({
         var beginC = '', endC = ''
         if (this.mode === ENUM_MODE.DEVELOP) {
             var vcC = ''
-            if (this.item.vc || this.item.viewController) vcC = 'ViewController: ' + (this.item.vc || this.item.viewController)
+            if (this.item.vc || this.item.dataController) vcC = 'DataController: ' + (this.item.vc || this.item.dataController)
             beginC = '<!-- START TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->\n'
             endC = '\n<!-- END TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->'
         }

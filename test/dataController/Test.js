@@ -1,15 +1,15 @@
 'use strict';
 
 var prime = require('prime')
-var VC = require('../../ViewController')
+var DC = require('../../DataController')
 var Promise = require('promise')
 
 var Test = prime({
 
-    inherits: VC,
+    inherits: DC,
 
     constructor: function () {
-        VC.apply(this, arguments)
+        DC.apply(this, arguments)
     },
 
     parse: function() {

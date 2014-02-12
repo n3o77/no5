@@ -172,7 +172,7 @@ describe('Template System', function() {
 
     describe('View Controller', function() {
         it('should manipulate all item values', function() {
-            return expect(template.render(template.item('vt_viewController', {'test': "abc"}))).to.eventually.be.eql('<div>1970-01-02</div>')
+            return expect(template.render(template.item('vt_dataController', {'test': "abc"}))).to.eventually.be.eql('<div>1970-01-02</div>')
         })
     })
 
@@ -189,8 +189,8 @@ describe('Template System', function() {
             return expect(template.render(template.item('err_t3', {'test': 'foo'}))).to.eventually.be.rejectedWith('Render method not implemented in VarTypeConrtoller: Wrong From:err_t3:1:8')
         })
 
-        it('should throw an error that the parse method is missing in "Wrong" ViewController', function() {
-            return expect(template.render(template.item('err_t4', {'test': 'foo'}))).to.eventually.be.rejectedWith('Parse method not implemented in ViewController: Wrong From:err_t4:1:8')
+        it('should throw an error that the parse method is missing in "Wrong" DataController', function() {
+            return expect(template.render(template.item('err_t4', {'test': 'foo'}))).to.eventually.be.rejectedWith('Parse method not implemented in DataController: Wrong From:err_t4:1:8')
         })
     })
 

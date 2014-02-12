@@ -16,8 +16,8 @@ templateDescriptor.registerVarTypeController('Bool', require('../VarTypeControll
 templateDescriptor.registerVarTypeController('Wrong', require('./VarTypeController/Wrong'))
 templateDescriptor.registerVarTypeController('Options', require('../VarTypeController/form/Options'))
 
-templateDescriptor.registerViewController('Test', require('./viewController/Test'))
-templateDescriptor.registerViewController('Wrong', require('./viewController/Wrong'))
+templateDescriptor.registerDataController('Test', require('./dataController/Test'))
+templateDescriptor.registerDataController('Wrong', require('./dataController/Wrong'))
 
 module.exports = {
     'item': require('../item'),

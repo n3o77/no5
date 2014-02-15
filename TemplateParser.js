@@ -66,7 +66,6 @@ var TemplateParser = prime({
 
             var DataControllerObj = this.templateController.getDataController(objVar.dc || objVar.dataController)
             if (DataControllerObj) {
-                console.log(objVar.dc, DataControllerObj)
                 if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
                 var dataController = new DataControllerObj.controller(typeTag, this.item.values, this.templateController, DataControllerObj.options)
                 ps.push(dataController.parse().then(this.initType.bind(this, typeTag, origItem)))

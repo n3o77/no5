@@ -66,6 +66,8 @@ var Partial = prime({
 
     castObjectToItem: function(obj, idx) {
         var tpl = this.typeTag.tpl || this.typeTag.template;
+        obj.__index = idx
+        obj.__count = idx + 1
         if (tpl) return bItem(tpl, obj, idx)
         return obj
     }

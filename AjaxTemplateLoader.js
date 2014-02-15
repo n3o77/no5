@@ -2,7 +2,7 @@
 var prime = require('prime')
 var Promise = require('promise')
 var object = {
-    'mixIn': require('prime/object/mixIn')
+    'merge': require('mout/object/merge')
 }
 var agent = require('agent');
 
@@ -13,7 +13,7 @@ var AjaxTemplateLoader = prime({
     running: null,
 
     constructor: function (conf) {
-        this.config = object.mixIn({}, this.config, conf);
+        this.config = object.merge(this.config, conf);
         this.cache = {};
         this.running = {};
     },

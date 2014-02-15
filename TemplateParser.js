@@ -64,32 +64,36 @@ var TemplateParser = prime({
             var pos = typeTag.pos
             var origItem
 
-            var initType = function() {
-                if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
-                var type = objVar.type = this.getType(objVar.type, object.get(this.item.values, objVar.key || ''))
-                var TypeControllerObj = this.typeController[type]
-                if (!TypeControllerObj) this.log.error('typeController "' + type + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
-
-                var options = object.map(TypeControllerObj.options, function(value) {
-                    if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
-                    return value
-                }, this)
-
-                var typeController = new TypeControllerObj.controller(typeTag, this.item, this.templateController, options)
-                return typeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
-            }.bind(this)
-
             var DataControllerObj = this.templateController.getDataController(objVar.dc || objVar.dataController)
             if (DataControllerObj) {
+                console.log(objVar.dc, DataControllerObj)
                 if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
                 var dataController = new DataControllerObj.controller(typeTag, this.item.values, this.templateController, DataControllerObj.options)
-                ps.push(dataController.parse().then(initType))
+                ps.push(dataController.parse().then(this.initType.bind(this, typeTag, origItem)))
             } else {
-                ps.push(initType())
+                ps.push(this.initType(typeTag))
             }
         }
 
         return all(ps).then(this.complete.bind(this), this.reject)
+    },
+
+    initType: function(typeTag, origItem) {
+        var objVar = typeTag.typeTag
+        var jsonVars = typeTag.jsonVars
+
+        if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
+        var type = objVar.type = this.getType(objVar.type, object.get(this.item.values, objVar.key || ''))
+        var TypeControllerObj = this.typeController[type]
+        if (!TypeControllerObj) this.log.error('typeController "' + type + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
+
+        var options = object.map(TypeControllerObj.options, function(value) {
+            if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
+            return value
+        }, this)
+
+        var typeController = new TypeControllerObj.controller(typeTag, this.item, this.templateController, options)
+        return typeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
     },
 
     complete: function() {

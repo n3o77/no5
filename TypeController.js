@@ -20,7 +20,11 @@ var TypeController = prime({
     },
 
     render: function() {
-        this.__log.error('Render method not implemented in TypeConrtoller: ' + this.typeTag.type + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
+        this.__error('Render method not implemented')
+    },
+
+    __error: function(msg) {
+        this.__log.error(msg + ' in TypeConrtoller: ' + this.typeTag.type + ' From:' + this.item.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
     }
 
 })

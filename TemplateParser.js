@@ -59,9 +59,7 @@ var TemplateParser = prime({
         for (var i = 0; i < vars.length; i++) {
             var typeTag = vars[i];
             typeTag.template = this.item.template
-            var jsonVars = typeTag.jsonVars
             var objVar = typeTag.typeTag
-            var pos = typeTag.pos
             var origItem
 
             var DataControllerObj = this.templateController.getDataController(objVar.dc || objVar.dataController)
@@ -80,6 +78,7 @@ var TemplateParser = prime({
     initType: function(typeTag, origItem) {
         var objVar = typeTag.typeTag
         var jsonVars = typeTag.jsonVars
+        var pos = typeTag.pos
 
         if (this.mode === ENUM_MODE.DEBUG && origItem && !object.deepEquals(origItem, this.item)) this.log.debug('Item Changed from DataController. Orig: ', origItem, ' New:', this.item)
         var type = objVar.type = this.getType(objVar.type, object.get(this.item.values, objVar.key || ''))

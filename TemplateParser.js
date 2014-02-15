@@ -79,7 +79,7 @@ var TemplateParser = prime({
                 return typeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
             }.bind(this)
 
-            var DataControllerObj = this.templateController.getDataController(objVar.vc || objVar.dataController)
+            var DataControllerObj = this.templateController.getDataController(objVar.dc || objVar.dataController)
             if (DataControllerObj) {
                 if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
                 var dataController = new DataControllerObj.controller(typeTag, this.item.values, this.templateController, DataControllerObj.options)
@@ -95,10 +95,10 @@ var TemplateParser = prime({
     complete: function() {
         var beginC = '', endC = ''
         if (this.mode === ENUM_MODE.DEVELOP) {
-            var vcC = ''
-            if (this.item.vc || this.item.dataController) vcC = 'DataController: ' + (this.item.vc || this.item.dataController)
-            beginC = '<!-- START TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->\n'
-            endC = '\n<!-- END TEMPLATE: "' + this.item.template + '" ' + vcC + ' -->'
+            var dcC = ''
+            if (this.item.dc || this.item.dataController) dcC = 'DataController: ' + (this.item.dc || this.item.dataController)
+            beginC = '<!-- START TEMPLATE: "' + this.item.template + '" ' + dcC + ' -->\n'
+            endC = '\n<!-- END TEMPLATE: "' + this.item.template + '" ' + dcC + ' -->'
         }
 
         this.resolve(beginC + this.tpl + endC)

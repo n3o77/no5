@@ -56,20 +56,26 @@ var TemplateParser = prime({
         var vars = this.getVars(tpl)
         if (vars.length === 0) return this.complete()
         var ps = []
-        for (var i = 0; i < vars.length; i++) {
-            var typeTag = vars[i];
-            typeTag.template = this.item.template
-            var objVar = typeTag.typeTag
-            var origItem
+        try {
+            for (var i = 0; i < vars.length; i++) {
+                var typeTag = vars[i];
+                typeTag.template = this.item.template
+                var objVar = typeTag.typeTag
+                var origItem
 
-            var DataControllerObj = this.templateController.getDataController(objVar.dc || objVar.dataController)
-            if (DataControllerObj) {
-                if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
-                var dataController = new DataControllerObj.controller(typeTag, this.item.values, this.templateController, DataControllerObj.options)
-                ps.push(dataController.parse().then(this.initType.bind(this, typeTag, origItem)))
-            } else {
-                ps.push(this.initType(typeTag))
+
+                var DataControllerObj = this.templateController.getDataController(objVar.dc || objVar.dataController)
+                if (DataControllerObj) {
+                    if (this.mode === ENUM_MODE.DEBUG) origItem = lang.deepClone(this.item)
+                    var dataController = new DataControllerObj.controller(typeTag, this.item.values, this.templateController, DataControllerObj.options)
+                    ps.push(dataController.parse().then(this.initType.bind(this, typeTag, origItem)))
+                } else {
+                    ps.push(this.initType(typeTag))
+                }
             }
+
+        } catch (e) {
+            this.log.error('From: ' + this.item.template + ':' + typeTag.pos.line + ':' + typeTag.pos.col, e.stack)
         }
 
         return all(ps).then(this.complete.bind(this), this.reject)

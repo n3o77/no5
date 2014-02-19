@@ -36,7 +36,7 @@ var VTDate = prime({
 
         if (lang.isString(value)) value = new Date(mDate.parseIso(value))
         if (!lang.isDate(value)) {
-            this.__log.error('Invalid Date: ' + value)
+            this.__error('Invalid Date: ' + value)
             return Promise.from('')
         }
 

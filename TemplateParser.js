@@ -73,9 +73,9 @@ var TemplateParser = prime({
                     ps.push(this.initType(typeTag))
                 }
             }
-
         } catch (e) {
-            this.log.error('From: ' + this.item.template + ':' + typeTag.pos.line + ':' + typeTag.pos.col, e.stack)
+            if (e instanceof TypeError) return this.log.error('From: ' + this.item.template + ':' + typeTag.pos.line + ':' + typeTag.pos.col, e.stack)
+            throw e
         }
 
         return all(ps).then(this.complete.bind(this), this.reject)

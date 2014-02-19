@@ -32,7 +32,7 @@ var Partial = prime({
     },
 
     render: function() {
-        var value = object.get(this.item.values, this.typeTag.key);
+        var value = this.typeTag.key ? object.get(this.item.values, this.typeTag.key) : null;
         if (isItem(value)) return this.templateController.parse(value)
         if (!value && lang.isString(this.typeTag.tpl || this.typeTag.template)) return this.templateController.parse(bItem(this.typeTag.tpl, lang.deepClone(this.item.values), 0, true))
 
@@ -43,7 +43,7 @@ var Partial = prime({
         var ps = []
         if (!items) return Promise.from('')
         if (isItem(items)) return this.templateController.parse(items)
-        if (!lang.isArray(items)) this.__log.error('Only type item or array is supported. You gave: ' + lang.kindOf(items) + ' ' + items)
+        if (!lang.isArray(items)) this.__error('Only type item or array is supported. You gave: ' + lang.kindOf(items) + ' ' + items)
 
         items.sort(function(a, b) {
             if (!a.pos && !b.pos) return 0

@@ -17,7 +17,7 @@ var DataController = prime({
     },
 
     parse: function() {
-        this.__log.error('Parse method not implemented in DataController: ' + (this.typeTag.vc || this.typeTag.dataController) + ' From:' + this.objVar.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
+        this.__log.error('Parse method not implemented in DataController: ' + (this.typeTag.dc || this.typeTag.dataController) + ' From:' + this.objVar.template + ':' + this.objVar.pos.line + ':' + this.objVar.pos.col);
     }
 
 })

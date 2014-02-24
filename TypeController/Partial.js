@@ -2,7 +2,7 @@
 
 var prime = require('prime')
 var VTC = require('../TypeController')
-var bItem = require('../item')
+var bItem = require('../Item')
 var isItem = require('../util/isItem')
 var lang = {
     'isObject': require('mout/lang/isObject'),

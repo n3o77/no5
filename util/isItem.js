@@ -1,6 +1,6 @@
 'use strict';
 
-var item = require('../item')
+var item = require('../Item')
 
 var lang = {
     'isObject': require('mout/lang/isObject')

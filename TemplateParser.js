@@ -3,7 +3,7 @@
 var prime = require('prime');
 var Promise = require('promise')
 var all = Promise.all
-var bItem = require('./item')
+var bItem = require('./Item')
 var isItem = require('./util/isItem')
 var ENUM_MODE = require('./enums').ENUM_MODE
 

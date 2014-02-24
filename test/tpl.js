@@ -20,7 +20,7 @@ templateDescriptor.registerDataController('Test', require('./dataController/Test
 templateDescriptor.registerDataController('Wrong', require('./dataController/Wrong'))
 
 module.exports = {
-    'item': require('../item'),
+    'item': require('../Item'),
     'render': function(item, session) {
         return templateDescriptor.parse(item, session);
     }

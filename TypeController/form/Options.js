@@ -3,7 +3,7 @@
 var prime = require('prime')
 var VTC = require('../../TypeController');
 var Promise = require('promise')
-var tplItem = require('../../item')
+var tplItem = require('../../Item')
 var Partial = require('./../Partial');
 
 var lang = {

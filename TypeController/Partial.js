@@ -32,9 +32,13 @@ var Partial = prime({
     },
 
     render: function() {
-        var value = this.typeTag.key ? object.get(this.item.values, this.typeTag.key) : null;
-        if (isItem(value)) return this.templateController.parse(value)
-        if (!value && lang.isString(this.typeTag.tpl || this.typeTag.template)) return this.templateController.parse(bItem(this.typeTag.tpl, lang.deepClone(this.item.values), 0, true))
+        var value = this.typeTag.key ? object.get(this.item.values, this.typeTag.key) : null
+        var render = this.typeTag.renderKey ? object.get(this.item.values, this.typeTag.renderKey) : true
+        if (isItem(value)) {
+            value.render = render
+            return this.templateController.parse(value)
+        }
+        if (!value && lang.isString(this.typeTag.tpl || this.typeTag.template)) return this.templateController.parse(bItem(this.typeTag.tpl, lang.deepClone(this.item.values), 0, render))
 
         return this.renderItems(value)
     },
@@ -42,7 +46,11 @@ var Partial = prime({
     renderItems: function(items) {
         var ps = []
         if (!items) return Promise.from('')
-        if (isItem(items)) return this.templateController.parse(items)
+        if (isItem(items)) {
+            items.render = this.typeTag.renderKey ? object.get(this.item.values, this.typeTag.renderKey) : true
+            return this.templateController.parse(items)
+        }
+
         if (!lang.isArray(items)) this.__error('Only type item or array is supported. You gave: ' + lang.kindOf(items) + ' ' + items)
 
         items.sort(function(a, b) {
@@ -54,8 +62,11 @@ var Partial = prime({
 
         array.forEach(items, function(item, idx) {
             if (lang.isObject(item) && !isItem(item)) item = this.castObjectToItem(item, idx)
-            if (lang.isString(item)) item = bItem(item, null, idx, true)
-            if (isItem(item)) return ps.push(this.templateController.parse(item))
+            if (lang.isString(item)) item = bItem(item, null, idx, this.typeTag.renderKey ? object.get(this.item.values, this.typeTag.renderKey) : true)
+            if (isItem(item)) {
+                if (this.typeTag.renderKey) item.render = object.get(this.item.values, this.typeTag.renderKey) || item.render || true
+                return ps.push(this.templateController.parse(item))
+            }
             ps.push(Promise.from(item))
         }, this)
 
@@ -66,9 +77,10 @@ var Partial = prime({
 
     castObjectToItem: function(obj, idx) {
         var tpl = this.typeTag.tpl || this.typeTag.template;
+        var render = this.typeTag.renderKey ? object.get(this.item.values, this.typeTag.renderKey) : true
         obj.__index = idx
         obj.__count = idx + 1
-        if (tpl) return bItem(tpl, obj, idx)
+        if (tpl) return bItem(tpl, obj, idx, render)
         return obj
     }
 

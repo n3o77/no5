@@ -33,6 +33,9 @@ var VTDate = prime({
     render: function() {
         var format = this.typeTag.format || this.options.format
         var value = object.get(this.item.values, this.typeTag.key)
+        var locale = this.typeTag.locale || object.get(this.item.values, this.typeTag.localeKey || '')
+
+        if (locale && this.options.locales[locale]) locale = this.options.locales[locale]
 
         if (lang.isString(value)) value = new Date(mDate.parseIso(value))
         if (!lang.isDate(value)) {
@@ -40,7 +43,7 @@ var VTDate = prime({
             return Promise.from('')
         }
 
-        return Promise.from(mDate.strftime(value, format))
+        return Promise.from(mDate.strftime(value, format, locale))
     }
 
 });

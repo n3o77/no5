@@ -8,11 +8,18 @@ var lang = {
 }
 var object = {
     'get': require('mout/object/get')
-};
+}
+var string = {
+    'escapeHtml': require('mout/string/escapeHtml')
+}
 
 var Text = prime({
 
     inherits: VTC,
+
+    options: {
+        'escapeHtml': false
+    },
 
     constructor: function () {
         VTC.apply(this, arguments)
@@ -21,6 +28,7 @@ var Text = prime({
     render: function() {
         var value = object.get(this.item.values, this.typeTag.key)
         if (!lang.isString(value)) value = JSON.stringify(value)
+        if (this.options.escapeHtml) value = string.escapeHtml(value)
 
         return Promise.from(value || '');
     }

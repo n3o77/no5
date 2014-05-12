@@ -6,6 +6,7 @@ var templateDescriptor = new TemplateDescriptor(templateLoader, {'throwError': t
 
 templateDescriptor.registerTypeController('Partial', require('../TypeController/Partial'))
 templateDescriptor.registerTypeController('Text', require('../TypeController/Text'))
+templateDescriptor.registerTypeController('TextEscapeHtml', require('../TypeController/Text'), {'escapeHtml': true})
 templateDescriptor.registerTypeController('Date', require('../TypeController/Date'))
 templateDescriptor.registerTypeController('TestDate', require('../TypeController/Date'), {'format': '%m.%d.%Y'})
 templateDescriptor.registerTypeController('SessionDate', require('../TypeController/Date'), {'format': '__session.formats.date'})

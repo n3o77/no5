@@ -18,6 +18,10 @@ describe('Template System', function() {
         it('should convert non text values to a string with JSON.stringify', function() {
             return expect(template.render(template.item('vt_text', {'test': {'abc': 'def'}}))).to.eventually.be.eql('<div>{"abc":"def"}</div>')
         })
+
+        it('should escape text with htmlchars', function () {
+            return expect(template.render(template.item('vt_textEscape', {'test': 'Abc "def" ghj <klm>nop'}))).to.eventually.be.eql('<div>Abc &quot;def&quot; ghj &lt;klm&gt;nop</div>')
+        })
     })
 
     describe('Type Date', function() {

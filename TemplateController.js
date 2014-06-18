@@ -52,7 +52,7 @@ var TemplateController = prime({
 
     parse: function(item) {
         if (!item.template) this.log.error('No Template Given', item)
-        if (!item.render) return Promise.from('')
+        if (!item.render) return Promise.resolve('')
 
         return this.templateLoader.loadTemplate(item.template).then(function(tpl) {
             var tplParser = this.getTemplateParser(item)

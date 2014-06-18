@@ -46,7 +46,7 @@ var Number = prime({
             fNum = sNum.join(opts.decPoint)
         }
 
-        return Promise.from(opts.prefix.toString() + fNum.toString() + opts.suffix.toString());
+        return Promise.resolve(opts.prefix.toString() + fNum.toString() + opts.suffix.toString());
     }
 
 });

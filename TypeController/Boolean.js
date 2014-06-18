@@ -31,7 +31,7 @@ var Boolean = prime({
         }
 
         var val = object.get(this.item.values, this.typeTag.key)
-        return Promise.from(val !== false && val !== undefined && val !== null ? t : f)
+        return Promise.resolve(val !== false && val !== undefined && val !== null ? t : f)
     }
 
 });

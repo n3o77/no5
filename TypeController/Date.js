@@ -40,10 +40,10 @@ var VTDate = prime({
         if (lang.isString(value)) value = new Date(mDate.parseIso(value))
         if (!lang.isDate(value)) {
             this.__error('Invalid Date: ' + value)
-            return Promise.from('')
+            return Promise.resolve('')
         }
 
-        return Promise.from(mDate.strftime(value, format, locale))
+        return Promise.resolve(mDate.strftime(value, format, locale))
     }
 
 });

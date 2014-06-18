@@ -30,7 +30,7 @@ var Text = prime({
         if (!lang.isString(value)) value = JSON.stringify(value)
         if (this.options.escapeHtml) value = string.escapeHtml(value)
 
-        return Promise.from(value || '');
+        return Promise.resolve(value || '');
     }
 
 });

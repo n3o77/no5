@@ -45,7 +45,7 @@ var Partial = prime({
 
     renderItems: function(items) {
         var ps = []
-        if (!items) return Promise.from('')
+        if (!items) return Promise.resolve('')
         if (isItem(items)) {
             items.render = this.typeTag.renderKey ? object.get(this.item.values, this.typeTag.renderKey) : true
             return this.templateController.parse(items)
@@ -67,7 +67,7 @@ var Partial = prime({
                 if (this.typeTag.renderKey) item.render = object.get(this.item.values, this.typeTag.renderKey) || item.render || true
                 return ps.push(this.templateController.parse(item))
             }
-            ps.push(Promise.from(item))
+            ps.push(Promise.resolve(item))
         }, this)
 
         return all(ps).then(function(templates) {

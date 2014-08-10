@@ -130,6 +130,10 @@ var TemplateParser = prime({
         var keyId = 'Key'
 
         object.forOwn(typeTag, function (value, key) {
+            if (string.startsWith(value, '__session')) {
+                typeTag[key] = object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
+            }
+
             if (key.length > keyId.length && string.endsWith(key, keyId)) {
                 var targetVar = key.substr(0, key.length - keyId.length)
                 typeTag[targetVar] = object.get(this.item.values, value) || typeTag[targetVar]

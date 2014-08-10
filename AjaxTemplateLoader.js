@@ -22,7 +22,7 @@ var AjaxTemplateLoader = prime({
         if (this.cache[filePath]) return Promise.resolve(this.cache[filePath]);
         if (this.running[filePath]) return Promise.resolve(this.running[filePath]);
         return this.running[filePath] = new Promise(function(resolve, reject) {
-            agent(this.config.loaderUrl, {'template': filePath}, function(response) {
+            agent(this.config.loaderUrl, {'template': filePath}, function(err, response) {
                 this.cache[filePath] = response.body;
                 return resolve(response.body);
             }.bind(this));

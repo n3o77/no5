@@ -62,7 +62,7 @@ var TemplateParser = prime({
             for (var i = 0; i < vars.length; i++) {
                 var typeTag = vars[i];
                 typeTag.template = this.item.template
-                var objVar = typeTag.typeTag
+                var objVar = typeTag.typeTag = this.prefillTypeTag(typeTag.typeTag)
                 var origItem
 
 
@@ -84,7 +84,7 @@ var TemplateParser = prime({
     },
 
     initType: function(typeTag, origItem) {
-        var objVar = this.prefillTypeTag(typeTag.typeTag)
+        var objVar = typeTag.typeTag
         var jsonVars = typeTag.jsonVars
         var pos = typeTag.pos
 

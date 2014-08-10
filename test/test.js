@@ -214,6 +214,10 @@ describe('Template System', function() {
         it('should be possible to use a short form of typeTags with the type', function() {
             return expect(template.render(template.item('vt_short2', {'test': '12'}))).to.eventually.be.eql('<div>12,000</div>')
         })
+
+        it('should prefill values when a key is given', function () {
+            return expect(template.render(template.item('key_prefill', {'test': new Date(1970, 0, 2), 'customer': {'locale': 'de_DE'}}))).to.eventually.be.eql('<div> 2. Januar 1970</div>')
+        })
     })
 
     describe('Form Helpers', function() {

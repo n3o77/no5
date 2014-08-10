@@ -33,7 +33,7 @@ var VTDate = prime({
     render: function() {
         var format = this.typeTag.format || this.options.format
         var value = object.get(this.item.values, this.typeTag.key)
-        var locale = this.typeTag.locale || object.get(this.item.values, this.typeTag.localeKey || '')
+        var locale = this.typeTag.locale
 
         if (locale && this.options.locales[locale]) locale = this.options.locales[locale]
 

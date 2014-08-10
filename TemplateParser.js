@@ -15,7 +15,8 @@ var array = {
 var object = {
     'get': require('mout/object/get'),
     'map': require('mout/object/map'),
-    'deepEquals': require('mout/object/deepEquals')
+    'deepEquals': require('mout/object/deepEquals'),
+    'forOwn': require('mout/object/forOwn')
 }
 var lang = {
     'isString': require('mout/lang/isString'),
@@ -26,6 +27,7 @@ var lang = {
 
 var string = {
     'startsWith': require('mout/string/startsWith'),
+    'endsWith': require('mout/string/endsWith'),
     'trim': require('mout/string/trim')
 }
 
@@ -82,7 +84,7 @@ var TemplateParser = prime({
     },
 
     initType: function(typeTag, origItem) {
-        var objVar = typeTag.typeTag
+        var objVar = this.prefillTypeTag(typeTag.typeTag)
         var jsonVars = typeTag.jsonVars
         var pos = typeTag.pos
 
@@ -122,6 +124,19 @@ var TemplateParser = prime({
 
     escapeVar: function(jvar) {
         return jvar.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    },
+
+    prefillTypeTag: function (typeTag) {
+        var keyId = 'Key'
+
+        object.forOwn(typeTag, function (value, key) {
+            if (key.length > keyId.length && string.endsWith(key, keyId)) {
+                var targetVar = key.substr(0, key.length - keyId.length)
+                typeTag[targetVar] = object.get(this.item.values, value) || typeTag[targetVar]
+            }
+        }, this)
+
+        return typeTag
     },
 
     getType: function(type, value) {

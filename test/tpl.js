@@ -6,8 +6,8 @@ i18nDe.x = "%e. %B %Y"
 var i18nUs = require('mout/date/i18n/en-US')
 i18nUs.x = "%B %e, %Y"
 
-var templateLoader = new TemplateLoader({'templates': __dirname + '/templates'})
-var templateDescriptor = new TemplateDescriptor(templateLoader, {'throwError': true, 'mode': TemplateDescriptor.ENUM_MODE.PRODUCTION})
+var templateLoader = new TemplateLoader({'templates': __dirname + '/templates', 'cache': true})
+var templateDescriptor = new TemplateDescriptor(templateLoader, {'throwError': true, 'mode': TemplateDescriptor.ENUM_MODE.PRODUCTION, 'parser': {'cache': true}})
 
 templateDescriptor.registerTypeController('Partial', require('../TypeController/Partial'))
 templateDescriptor.registerTypeController('Text', require('../TypeController/Text'))

@@ -15,7 +15,10 @@ var TemplateDescriptor = prime({
         'language': 'en_EN',
         'dateFormat': 'DD.MM.YYYY',
         'mode': ENUM_MODE.DEVELOP,
-        'throwError': false
+        'throwError': false,
+        'parser': {
+            'cache': false
+        }
     },
 
     'ENUM_MODE': ENUM_MODE,

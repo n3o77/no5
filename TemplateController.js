@@ -61,7 +61,7 @@ var TemplateController = prime({
     },
 
     getTemplateParser: function(item) {
-        return new TemplateParser(this.typeController, this, item)
+        return new TemplateParser(this.typeController, this, item, this.constants.parser)
     }
 
 });

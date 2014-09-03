@@ -16,7 +16,8 @@ var object = {
     'get': require('mout/object/get'),
     'map': require('mout/object/map'),
     'deepEquals': require('mout/object/deepEquals'),
-    'forOwn': require('mout/object/forOwn')
+    'forOwn': require('mout/object/forOwn'),
+    'merge': require('mout/object/merge')
 }
 var lang = {
     'isString': require('mout/lang/isString'),
@@ -34,8 +35,15 @@ var string = {
 var TemplateParser = prime({
 
     typeController: null,
+    options: {
+        'cache': false
+    },
+    cache: {
+        'templates': {}
+    },
 
-    constructor: function (typeController, templateController, item) {
+    constructor: function (typeController, templateController, item, options) {
+        this.options = object.merge(this.options, options)
         this.typeController = typeController
         this.templateController = templateController
         this.item = item
@@ -181,6 +189,10 @@ var TemplateParser = prime({
     },
 
     getVars: function(source) {
+        if (this.options.cache && this.cache.templates[this.item.template]) {
+            return lang.deepClone(this.cache.templates[this.item.template])
+        }
+
         var result = []
         var bits = source.split("${")
         var lastPos = {'line': 1, 'col': 1}
@@ -192,6 +204,9 @@ var TemplateParser = prime({
 
             this.addVarToResults(this.parseVar(varStr, lastPos), result)
         }
+
+        if (this.options.cache) this.cache.templates[this.item.template] = lang.deepClone(result)
+
         return result
     },
 

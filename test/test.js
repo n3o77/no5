@@ -240,8 +240,8 @@ describe('Template System', function() {
             var dateval = new Date()
             var partialval = [];
 
-            for (var i = 0; i < 1; i++) {
-                partialval.push(template.item('speed2', {
+            for (var i = 0; i < 10; i++) {
+                partialval.push(template.item('speed3', {
                     'headline1': 'h1 ' + i,
                     'headline2': 'h2 ' + i,
                     'headline3': 'h3 ' + i,
@@ -251,10 +251,10 @@ describe('Template System', function() {
                     'dateval': dateval,
                     'numberval': 12.34,
                     'partialval': []
-                }))
+                }, i))
             }
 
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 15; i++) {
                 start.push(template.item('speed2', {
                     'headline1': 'h1 ' + i,
                     'headline2': 'h2 ' + i,
@@ -265,7 +265,7 @@ describe('Template System', function() {
                     'dateval': dateval,
                     'numberval': 12.34,
                     'partialval': partialval
-                }))
+                }, i))
             }
             var startTime = Date.now()
             return template.render(template.item('speed', {'start': start})).then(function (res) {

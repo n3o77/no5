@@ -234,4 +234,45 @@ describe('Template System', function() {
         })
     })
 
+    describe('Performance Test', function () {
+        xit('should be fast :D', function () {
+            var start = [];
+            var dateval = new Date()
+            var partialval = [];
+
+            for (var i = 0; i < 1; i++) {
+                partialval.push(template.item('speed2', {
+                    'headline1': 'h1 ' + i,
+                    'headline2': 'h2 ' + i,
+                    'headline3': 'h3 ' + i,
+                    'headline4': 'h4 ' + i,
+                    'headline5': 'h5 ' + i,
+                    'headline6': 'h6 ' + i,
+                    'dateval': dateval,
+                    'numberval': 12.34,
+                    'partialval': []
+                }))
+            }
+
+            for (var i = 0; i < 10; i++) {
+                start.push(template.item('speed2', {
+                    'headline1': 'h1 ' + i,
+                    'headline2': 'h2 ' + i,
+                    'headline3': 'h3 ' + i,
+                    'headline4': 'h4 ' + i,
+                    'headline5': 'h5 ' + i,
+                    'headline6': 'h6 ' + i,
+                    'dateval': dateval,
+                    'numberval': 12.34,
+                    'partialval': partialval
+                }))
+            }
+            var startTime = Date.now()
+            return template.render(template.item('speed', {'start': start})).then(function (res) {
+                var endTime = Date.now()
+                console.log('diff', endTime - startTime, 'length', res.length)
+            })
+        })
+    })
+
 });

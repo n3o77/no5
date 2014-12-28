@@ -80,6 +80,9 @@ var TemplateParser = prime({
                     var dataController = new DataControllerObj.controller(typeTag, this.item.values, this.templateController, DataControllerObj.options)
                     ps.push(dataController.parse().then(this.initType.bind(this, typeTag, origItem)))
                 } else {
+                    if (objVar.dc || objVar.dataController) {
+                        this.log.warn('DataController ('+(objVar.dc || objVar.dataController)+') not found. From: ' + this.item.template + ':' + typeTag.pos.line + ':' + typeTag.pos.col);
+                    }
                     ps.push(this.initType(typeTag))
                 }
             }

@@ -114,6 +114,18 @@ describe('Template System', function() {
 
             return expect(template.render(template.item('vt_partial2', {'test': items}))).to.eventually.be.eql('<div>a ps1 ba ps2 ba ps3 bc op2 def</div>')
         })
+
+        it('should takeover values passed in the typeTag', function() {
+            return expect(template.render(template.item('vt_partial4'))).to.eventually.be.eql('<div><div>partial4name partial4title</div></div>')
+        })
+
+        it('should takeover values passed in the typeTag but merge them with controller given', function() {
+            return expect(template.render(template.item('vt_partial4', {'name': 'controller4name'}))).to.eventually.be.eql('<div><div>controller4name partial4title</div></div>')
+        })
+
+        it('should takeover values passed in the typeTag but merge them with controller given for multiple items', function() {
+            return expect(template.render(template.item('vt_partial4', {'test': [{'name': 'a'}, {'name': 'b', 'title': 'c'}, {'title': 'd'}]}))).to.eventually.be.eql('<div><div>a partial4title</div><div>b c</div><div>partial4name d</div></div>')
+        })
     })
 
     describe('Type Boolean', function() {

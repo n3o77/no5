@@ -17,7 +17,8 @@ var array = {
 }
 var object = {
     'get': require('mout/object/get'),
-    'forOwn': require('mout/object/forOwn')
+    'forOwn': require('mout/object/forOwn'),
+    'merge': require('mout/object/merge')
 }
 
 var Promise = require('promise')
@@ -29,6 +30,16 @@ var Partial = prime({
 
     constructor: function () {
         VTC.apply(this, arguments)
+
+        this.initValues()
+    },
+
+    initValues: function () {
+        if (lang.kindOf(this.typeTag.values) === "Object") {
+            this.values = this.typeTag.values
+        } else {
+            this.values = {}
+        }
     },
 
     render: function() {
@@ -38,7 +49,8 @@ var Partial = prime({
             value.render = render
             return this.templateController.parse(value)
         }
-        if (!value && lang.isString(this.typeTag.tpl || this.typeTag.template)) return this.templateController.parse(bItem(this.typeTag.tpl, lang.deepClone(this.item.values), 0, render))
+
+        if (!value && lang.isString(this.typeTag.tpl || this.typeTag.template)) return this.templateController.parse(bItem(this.typeTag.tpl, object.merge(this.values, lang.deepClone(this.item.values)), 0, render))
 
         return this.renderItems(value)
     },
@@ -76,6 +88,7 @@ var Partial = prime({
     },
 
     castObjectToItem: function(obj, idx) {
+        obj = object.merge(this.values, obj)
         var tpl = this.typeTag.tpl || this.typeTag.template;
         var render = this.typeTag.renderKey ? object.get(this.item.values, this.typeTag.renderKey) : true
         obj.__index = idx

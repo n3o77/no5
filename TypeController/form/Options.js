@@ -59,7 +59,7 @@ var Options = prime({
 
     buildOptions: function(options) {
         if (!options) return []
-        var currentlySelected = object.get(this.item.values, this.typeTag.key)
+        var currentlySelected = object.get(this.item.values, this.typeTag.key || '')
         var tpl = this.typeTag.tpl ? object.get(this.item.values, this.typeTag.tpl) : 'form/option'
 
         return array.map(options, function(option, index) {

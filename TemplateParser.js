@@ -104,13 +104,18 @@ var TemplateParser = prime({
         var TypeControllerObj = this.typeController[type]
         if (!TypeControllerObj) return this.log.error('typeController "' + type + '" not available. From: ' + this.item.template + ':' + pos.line + ':' + pos.col)
 
-        var options = object.map(TypeControllerObj.options, function(value) {
-            if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
-            return value
-        }, this)
+        var options = this.mapSessionVars(TypeControllerObj.options)
 
         var typeController = new TypeControllerObj.controller(typeTag, this.item, this.templateController, options)
         return typeController.render().then(this.updateTemplate.bind(this, jsonVars, this.item))
+    },
+
+    mapSessionVars: function (options) {
+        return object.map(options, function(value) {
+            if (lang.isObject(value)) return this.mapSessionVars(value)
+            if (string.startsWith(value, '__session')) return object.get(this.templateController.getSession(), value.replace(/^__session\./, ''))
+            return value
+        }, this)
     },
 
     complete: function() {

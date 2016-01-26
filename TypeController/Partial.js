@@ -9,7 +9,7 @@ var lang = {
     'isArray': require('mout/lang/isArray'),
     'isString': require('mout/lang/isString'),
     'kindOf': require('mout/lang/kindOf'),
-    'deepClone': require('mout/lang/deepClone')
+    'deepClone': require('lodash.clonedeep')
 }
 var array = {
     'forEach': require('mout/array/forEach'),

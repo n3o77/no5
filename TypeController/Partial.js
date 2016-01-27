@@ -65,7 +65,6 @@ var Partial = prime({
 
         if (!lang.isArray(items)) this.__error('Only type item or array is supported. You gave: ' + lang.kindOf(items) + ' ' + items)
         var posField = this.typeTag['sortField'] || 'pos'
-        console.log('sortField', posField, items);
 
         items.sort(function(a, b) {
             if (!a[posField] && !b[posField]) return 0
